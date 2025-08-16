@@ -23,6 +23,11 @@ public class Aluno extends UsuarioPessoaFisica {
         setResponsaveis(responsaveis);
     }
 
+    // Login constructor
+    public Aluno(Long id, Cargo cargo) {
+        super(id, cargo);
+    }
+
     // Métodos de acesso
     public List<Turma> getTurmas() {
         return turmas;

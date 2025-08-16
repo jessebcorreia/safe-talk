@@ -20,6 +20,11 @@ public class Analista extends UsuarioPessoaFisica {
         setCursos(cursos);
     }
 
+    // Login constructor
+    public Analista(Long id, Cargo cargo) {
+        super(id, cargo);
+    }
+
     // Métodos de acesso
     public List<Curso> getCursos() {
         return cursos;

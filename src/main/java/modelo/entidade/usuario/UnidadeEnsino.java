@@ -17,6 +17,11 @@ public class UnidadeEnsino extends UsuarioPessoaJuridica {
         setDescricao(descricao);
     }
 
+    // Login constructor
+    public UnidadeEnsino(Long id, Cargo cargo) {
+        super(id, cargo);
+    }
+
     // Métodos de acesso
     public String getDescricao() {
         return descricao;

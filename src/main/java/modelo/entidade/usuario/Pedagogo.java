@@ -20,6 +20,11 @@ public class Pedagogo extends UsuarioPessoaFisica {
         setTurmas(turmas);
     }
 
+    // Login constructor
+    public Pedagogo(Long id, Cargo cargo) {
+        super(id, cargo);
+    }
+
     // Métodos de acesso
     public List<Turma> getTurmas() {
         return turmas;

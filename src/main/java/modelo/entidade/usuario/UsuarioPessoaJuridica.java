@@ -21,6 +21,11 @@ public abstract class UsuarioPessoaJuridica extends Usuario {
         setCnpj(cnpj);
     }
 
+    // Login constructor
+    public UsuarioPessoaJuridica(Long id, Cargo cargo) {
+        super(id, cargo);
+    }
+
     // Métodos de acesso
     public String getNomeFantasia() {
         return nomeFantasia;

@@ -24,6 +24,11 @@ public abstract class UsuarioPessoaFisica extends Usuario {
         setSexo(sexo);
     }
 
+    // Login constructor
+    public UsuarioPessoaFisica(Long id, Cargo cargo) {
+        super(id, cargo);
+    }
+
     // Métodos de acesso
     public String getNome() {
         return nome;
