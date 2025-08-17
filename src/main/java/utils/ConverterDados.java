@@ -1,5 +1,6 @@
-package controlador.utils;
+package utils;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -26,5 +27,9 @@ public class ConverterDados {
         } catch (DateTimeParseException e) {
             return null;
         }
+    }
+
+    public static LocalDateTime timestampParaLocalDateTime(Timestamp timestamp) {
+        return timestamp != null ? timestamp.toLocalDateTime() : null;
     }
 }
