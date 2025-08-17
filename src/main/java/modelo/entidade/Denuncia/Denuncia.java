@@ -1,6 +1,6 @@
-package modelo.entidade.Denuncia;
+package modelo.entidade.denuncia;
 
-import modelo.entidade.Denuncia.Andamento.Andamento;
+import modelo.entidade.denuncia.Andamento.Andamento;
 import modelo.entidade.geral.Endereco;
 import modelo.entidade.geral.enumeracoes.TipoDenuncia;
 import modelo.entidade.usuario.Aluno;
@@ -162,4 +162,38 @@ public class Denuncia {
     public void setAndamentos(List<Andamento> andamentos) {
         this.andamentos = andamentos;
     }
+
+    // Outros métodos
+    @Override
+    public String toString() {
+        long id = getId();
+        String titulo = getTitulo();
+        String conteudo = getConteudo();
+        TipoDenuncia tipoDenuncia = getTipoDenuncia();
+        LocalDateTime criadoEm = getCriadoEm();
+        LocalDateTime atualizadoEm = getAtualizadoEm();
+        LocalDateTime encerradoEm = getEncerradoEm();
+
+        Endereco localFato = getLocalFato();
+        Usuario autor = getAutor();
+        Analista analista = getAnalista();
+
+        Long localFatoId = localFato != null ? localFato.getId() : null;
+        Long autorId = autor != null ? autor.getId() : null;
+        Long analistaId = analista != null ? analista.getId() : null;
+
+        return "{\n" +
+                "  id: " + id + ",\n" +
+                "  titulo: " + (titulo != null ? "\"" + titulo + "\"" : "null") + ",\n" +
+                "  conteudo: " + (conteudo != null ? "\"" + conteudo + "\"" : "null") + ",\n" +
+                "  tipoDenuncia: " + (tipoDenuncia != null ? "\"" + tipoDenuncia + "\"" : "null") + ",\n" +
+                "  criadoEm: " + (criadoEm != null ? "\"" + criadoEm + "\"" : "null") + ",\n" +
+                "  atualizadoEm: " + (atualizadoEm != null ? "\"" + atualizadoEm + "\"" : "null") + ",\n" +
+                "  encerradoEm: " + (encerradoEm != null ? "\"" + encerradoEm + "\"" : "null") + ",\n" +
+                "  localFatoId: " + (localFatoId != null ? localFatoId : "null") + ",\n" +
+                "  autorId: " + (autorId != null ? autorId : "null") + ",\n" +
+                "  analistaId: " + (analistaId != null ? analistaId : "null") + "\n" +
+                "}";
+    }
+
 }

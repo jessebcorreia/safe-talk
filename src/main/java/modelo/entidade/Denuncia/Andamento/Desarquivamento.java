@@ -1,4 +1,4 @@
-package modelo.entidade.Denuncia.Andamento;
+package modelo.entidade.denuncia.Andamento;
 
 import modelo.entidade.geral.enumeracoes.MotivoDesarquivamento;
 import modelo.entidade.geral.enumeracoes.TipoAndamento;

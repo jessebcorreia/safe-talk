@@ -100,4 +100,19 @@ public class Endereco {
     public void setPais(String pais) {
         this.pais = pais;
     }
+
+    @Override
+    public String toString() {
+        return "{\n" +
+                "  id: " + (id != null ? id : "null") + ",\n" +
+                "  logradouro: " + (logradouro != null ? "\"" + logradouro + "\"" : "null") + ",\n" +
+                "  numero: " + (numero != null ? "\"" + numero + "\"" : "null") + ",\n" +
+                "  complemento: " + (complemento != null ? "\"" + complemento + "\"" : "null") + ",\n" +
+                "  bairro: " + (bairro != null ? "\"" + bairro + "\"" : "null") + ",\n" +
+                "  cidade: " + (cidade != null ? "\"" + cidade + "\"" : "null") + ",\n" +
+                "  estado: " + (estado != null ? "\"" + estado + "\"" : "null") + ",\n" +
+                "  cep: " + (cep != null ? "\"" + cep + "\"" : "null") + ",\n" +
+                "  pais: " + (pais != null ? "\"" + pais + "\"" : "null") + "\n" +
+                "}";
+    }
 }
