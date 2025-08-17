@@ -2,22 +2,48 @@ package modelo.dao;
 
 import modelo.entidade.geral.enumeracoes.Cargo;
 import modelo.entidade.usuario.*;
-import modelo.fabrica.conexao.FabricaConexao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
-    public Usuario recuperarUsuarioPeloEmailESenha(String email, String senha) {
+    public Long cadastrarUsuario(Connection conexao, Usuario usuario) {
+        String sql = "INSERT INTO usuario (email, senha, cargo, endereco_id) VALUES (?, ?, ?, ?)";
+        Long idGerado = null;
+
+        try(PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, usuario.getEmail());
+            preparedStatement.setString(2, usuario.getSenha());
+            preparedStatement.setString(3, usuario.getCargo().toString());
+            preparedStatement.setLong(4, usuario.getEndereco().getId());
+
+            int linhasAfetadas = preparedStatement.executeUpdate();
+            if (linhasAfetadas == 0)
+                throw new SQLException("Falha ao inserir usuário: nenhuma linha afetada.");
+
+            try(ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (!resultSet.next())
+                    throw new SQLException("Falha ao inserir usuário: não retornou ID.");
+                idGerado = resultSet.getLong(1);
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+
+        return idGerado;
+    }
+
+    @Override
+    public Usuario recuperarUsuarioPeloEmailESenha(Connection conexao, String email, String senha) {
         String sql = "SELECT id, cargo FROM usuario WHERE email = ? AND senha = ?";
         Usuario usuario = null;
 
-        try(Connection conexao = FabricaConexao.conectar();
-            PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+        try(PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, senha);
 
@@ -25,6 +51,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                 if(resultSet.next()) {
                     Long id = resultSet.getLong("id");
                     String cargoStr = resultSet.getString("cargo");
+                    // TODO: Tratar possível exceção ao instanciar um cargo
                     Cargo cargo = Cargo.valueOf(cargoStr);
 
                     switch (cargo) {
@@ -46,8 +73,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);;
+            return null;
         }
-        return null;
+        return usuario;
     }
 }
