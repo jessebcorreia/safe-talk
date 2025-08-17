@@ -72,33 +72,32 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    public Usuario recuperarUsuarioPeloEmailESenha(Connection conexao, String email, String senha) {
-        String sql = "SELECT id, cargo FROM usuario WHERE email = ? AND senha = ?";
+    public Usuario recuperarUsuarioPeloEmail(Connection conexao, String email) {
+        String sql = "SELECT id, email, senha, cargo FROM usuario WHERE email = ?";
         Usuario usuario = null;
 
         try(PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, senha);
 
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     Long id = resultSet.getLong("id");
+                    String senha = resultSet.getString("senha");
                     String cargoStr = resultSet.getString("cargo");
-                    // TODO: Tratar possível exceção ao instanciar um cargo
                     Cargo cargo = Cargo.valueOf(cargoStr);
 
                     switch (cargo) {
                         case ALUNO:
-                            usuario = new Aluno(id, cargo);
+                            usuario = new Aluno(id, email, senha, cargo);
                             break;
                         case PEDAGOGO:
-                            usuario = new Pedagogo(id, cargo);
+                            usuario = new Pedagogo(id, email, senha, cargo);
                             break;
                         case ANALISTA:
-                            usuario = new Analista(id, cargo);
+                            usuario = new Analista(id, email, senha, cargo);
                             break;
                         case UNIDADE_ENSINO:
-                            usuario = new UnidadeEnsino(id, cargo);
+                            usuario = new UnidadeEnsino(id, email, senha, cargo);
                             break;
                         default:
                             return null;

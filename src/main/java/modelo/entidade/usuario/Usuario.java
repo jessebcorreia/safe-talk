@@ -30,8 +30,10 @@ public abstract class Usuario {
     }
 
     // Login constructor
-    public Usuario(Long id, Cargo cargo) {
+    public Usuario(Long id, String email, String senha, Cargo cargo) {
         setId(id);
+        setEmail(email);
+        setSenha(senha);
         setCargo(cargo);
     }
 

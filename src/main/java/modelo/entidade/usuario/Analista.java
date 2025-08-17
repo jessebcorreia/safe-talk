@@ -21,8 +21,8 @@ public class Analista extends UsuarioPessoaFisica {
     }
 
     // Login constructor
-    public Analista(Long id, Cargo cargo) {
-        super(id, cargo);
+    public Analista(Long id, String email, String senha, Cargo cargo) {
+        super(id, email, senha, cargo);
     }
 
     // Métodos de acesso

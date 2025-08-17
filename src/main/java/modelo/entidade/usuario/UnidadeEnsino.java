@@ -18,8 +18,8 @@ public class UnidadeEnsino extends UsuarioPessoaJuridica {
     }
 
     // Login constructor
-    public UnidadeEnsino(Long id, Cargo cargo) {
-        super(id, cargo);
+    public UnidadeEnsino(Long id, String email, String senha, Cargo cargo) {
+        super(id, email, senha, cargo);
     }
 
     // Métodos de acesso

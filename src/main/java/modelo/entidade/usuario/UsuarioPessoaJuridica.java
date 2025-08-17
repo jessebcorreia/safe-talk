@@ -22,8 +22,8 @@ public abstract class UsuarioPessoaJuridica extends Usuario {
     }
 
     // Login constructor
-    public UsuarioPessoaJuridica(Long id, Cargo cargo) {
-        super(id, cargo);
+    public UsuarioPessoaJuridica(Long id, String email, String senha, Cargo cargo) {
+        super(id, email, senha, cargo);
     }
 
     // Métodos de acesso
