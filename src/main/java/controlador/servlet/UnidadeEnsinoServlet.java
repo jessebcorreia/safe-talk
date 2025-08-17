@@ -1,5 +1,6 @@
 package controlador.servlet;
 
+import controlador.utils.ConverterDados;
 import modelo.dao.*;
 import modelo.entidade.geral.Endereco;
 import modelo.entidade.geral.enumeracoes.Cargo;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet("/usuario/unidade-ensino/*")
 public class UnidadeEnsinoServlet extends HttpServlet {
@@ -53,8 +56,11 @@ public class UnidadeEnsinoServlet extends HttpServlet {
                 System.out.println("/");
                 break;
             case "/cadastrar":
-                System.out.println("/cadastrar");
                 cadastrarUnidadeEnsino(request, response);
+                break;
+            case "/atualizar":
+                System.out.println("teste");
+                atualizarUnidadeEnsino(request, response);
                 break;
             default:
                 System.out.println("Rota não mapeada");
@@ -74,6 +80,19 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/login");
     }
 
+    private void atualizarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        UnidadeEnsino unidadeEnsino = criarUnidadeEnsinoMapeandoRequisicao(request);
+
+        boolean sucesso = unidadeEnsinoService.atualizarUnidadeEnsino(unidadeEnsino);
+        if(!sucesso) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Falha ao atualizar unidade");
+            return;
+        }
+
+        response.sendRedirect(request.getContextPath() + "/usuario/unidade-ensino");
+    }
+
     private UnidadeEnsino criarUnidadeEnsinoMapeandoRequisicao(HttpServletRequest request) {
         String logradouro = request.getParameter("logradouro");
         String numero = request.getParameter("numero");
@@ -84,18 +103,24 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         String cep = request.getParameter("cep");
         String pais = request.getParameter("pais");
 
-        Endereco endereco = new Endereco(null, logradouro, numero, complemento, bairro, cidade, estado, cep, pais);
+        Long idEndereco = ConverterDados.stringParaLong(request.getParameter("id_endereco"));
+
+        Endereco endereco = new Endereco(idEndereco, logradouro, numero, complemento, bairro, cidade, estado, cep, pais);
 
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
-        String cargoStr = request.getParameter("cargo");
         String nomeFantasia = request.getParameter("nome_fantasia");
         String razaoSocial = request.getParameter("razao-social");
         String cnpj = request.getParameter("cnpj");
         String descricao = request.getParameter("descricao");
 
+        String cargoStr = request.getParameter("cargo");
         Cargo cargo = Cargo.valueOf(cargoStr);
 
-        return new UnidadeEnsino(null, email, senha, null, null, cargo, endereco, nomeFantasia, razaoSocial, cnpj, descricao);
+        Long idUsuario = ConverterDados.stringParaLong(request.getParameter("id_usuario"));
+        LocalDateTime criadoEm = ConverterDados.stringParaLocalDateTime(request.getParameter("criado_em"));
+        LocalDateTime atualizadoEm = ConverterDados.stringParaLocalDateTime(request.getParameter("atualizado_em"));
+
+        return new UnidadeEnsino(idUsuario, email, senha, criadoEm, atualizadoEm, cargo, endereco, nomeFantasia, razaoSocial, cnpj, descricao);
     }
 }

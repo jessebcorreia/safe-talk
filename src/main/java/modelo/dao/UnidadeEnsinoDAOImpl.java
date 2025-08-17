@@ -28,4 +28,23 @@ public class UnidadeEnsinoDAOImpl implements UnidadeEnsinoDAO {
             return false;
         }
     }
+
+    @Override
+    public boolean atualizarUnidadeEnsino(Connection conexao, UnidadeEnsino unidadeEnsino) {
+        String sql = "UPDATE usuario_unidade_ensino SET nome_fantasia=?, razao_social=?, cnpj=?, descricao=? WHERE usuario_id = ?";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+            preparedStatement.setString(1, unidadeEnsino.getNomeFantasia());
+            preparedStatement.setString(2, unidadeEnsino.getRazaoSocial());
+            preparedStatement.setString(3, unidadeEnsino.getCnpj());
+            preparedStatement.setString(4, unidadeEnsino.getDescricao());
+            preparedStatement.setLong(5, unidadeEnsino.getId());
+
+            int linhasAfetadas = preparedStatement.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            Logger.getLogger(UnidadeEnsinoDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
 }

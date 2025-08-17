@@ -56,4 +56,25 @@ public class UnidadeEnsinoService {
             return false;
         }
     }
+
+    public boolean atualizarUnidadeEnsino(UnidadeEnsino unidadeEnsino) {
+        try (Connection conexao = FabricaConexao.conectar()) {
+            conexao.setAutoCommit(false);
+
+            boolean usuarioAtualizado = usuarioDAO.atualizarUsuario(conexao, unidadeEnsino);
+            boolean enderecoAtualizado = enderecoDAO.atualizarEndereco(conexao, unidadeEnsino.getEndereco());
+            boolean unidadeEnsinoAtualizada = unidadeEnsinoDAO.atualizarUnidadeEnsino(conexao, unidadeEnsino);
+
+            if (!usuarioAtualizado || !enderecoAtualizado || !unidadeEnsinoAtualizada) {
+                conexao.rollback();
+                return false;
+            }
+
+            conexao.commit();
+            return true;
+        } catch (SQLException e) {
+            Logger.getLogger(UnidadeEnsinoService.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
 }
