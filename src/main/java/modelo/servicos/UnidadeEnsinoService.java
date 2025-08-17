@@ -96,4 +96,13 @@ public class UnidadeEnsinoService {
             return false;
         }
     }
+
+    public UnidadeEnsino recuperarUnidadeEnsinoPeloId(Long id) {
+        try (Connection conexao = FabricaConexao.conectar()) {
+            return unidadeEnsinoDAO.recuperarUnidadeEnsinoPeloId(conexao, id);
+        } catch (SQLException e) {
+            Logger.getLogger(UnidadeEnsinoService.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    };
 }

@@ -1,6 +1,6 @@
 package controlador.servlet;
 
-import controlador.utils.ConverterDados;
+import utils.ConverterDados;
 import modelo.dao.*;
 import modelo.entidade.geral.Endereco;
 import modelo.entidade.geral.enumeracoes.Cargo;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @WebServlet("/usuario/unidade-ensino/*")
 public class UnidadeEnsinoServlet extends HttpServlet {
@@ -64,6 +63,12 @@ public class UnidadeEnsinoServlet extends HttpServlet {
             case "/deletar":
                 deletarUnidadeEnsino(request, response);
                 break;
+            case "/recuperar":
+                recuperarUnidadeEnsino(request, response);
+                break;
+            case "/listar":
+                System.out.println("/listar");
+                break;
             default:
                 System.out.println("Rota não mapeada");
                 // Se o endpoint for nulo ou não estiver mapeado, cai aqui
@@ -106,6 +111,24 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         }
 
         response.sendRedirect(request.getContextPath() + "/usuario");
+    }
+
+    private void recuperarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Long idUsuario = ConverterDados.stringParaLong(request.getParameter("id_usuario"));
+        if (idUsuario == null){
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "O id não foi informado");
+            return;
+        }
+
+        UnidadeEnsino unidadeEnsino = unidadeEnsinoService.recuperarUnidadeEnsinoPeloId(idUsuario);
+        if (unidadeEnsino == null){
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "A unidade de ensino não foi encontrada");
+            return;
+        }
+
+        request.setAttribute("unidade-ensino", unidadeEnsino);
+        request.getRequestDispatcher("/usuario/unidade-ensino-detalhe.jsp").forward(request, response);
     }
 
     private UnidadeEnsino criarUnidadeEnsinoMapeandoRequisicao(HttpServletRequest request) {
