@@ -59,8 +59,10 @@ public class UnidadeEnsinoServlet extends HttpServlet {
                 cadastrarUnidadeEnsino(request, response);
                 break;
             case "/atualizar":
-                System.out.println("teste");
                 atualizarUnidadeEnsino(request, response);
+                break;
+            case "/deletar":
+                deletarUnidadeEnsino(request, response);
                 break;
             default:
                 System.out.println("Rota não mapeada");
@@ -91,6 +93,19 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         }
 
         response.sendRedirect(request.getContextPath() + "/usuario/unidade-ensino");
+    }
+
+    private void deletarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        Long idUsuario = ConverterDados.stringParaLong(request.getParameter("id_usuario"));
+
+        boolean sucesso = unidadeEnsinoService.deletarUnidadeEnsinoPeloId(idUsuario);
+        if (!sucesso) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Falha ao deletar usuário");
+            return;
+        }
+
+        response.sendRedirect(request.getContextPath() + "/usuario");
     }
 
     private UnidadeEnsino criarUnidadeEnsinoMapeandoRequisicao(HttpServletRequest request) {

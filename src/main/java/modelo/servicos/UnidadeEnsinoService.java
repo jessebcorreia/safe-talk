@@ -77,4 +77,23 @@ public class UnidadeEnsinoService {
             return false;
         }
     }
+
+    public boolean deletarUnidadeEnsinoPeloId(Long id) {
+        try (Connection conexao = FabricaConexao.conectar()) {
+            conexao.setAutoCommit(false);
+
+            boolean unidadeEnsinoDeletada = usuarioDAO.deletarUsuarioPeloId(conexao, id);
+
+            if (!unidadeEnsinoDeletada) {
+                conexao.rollback();
+                return false;
+            }
+
+            conexao.commit();
+            return true;
+        } catch (SQLException e) {
+            Logger.getLogger(UnidadeEnsinoService.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
 }
