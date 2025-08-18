@@ -1,6 +1,6 @@
 package modelo.entidade.denuncia;
 
-import modelo.entidade.denuncia.Andamento.Andamento;
+import modelo.entidade.denuncia.andamento.Andamento;
 import modelo.entidade.geral.Endereco;
 import modelo.entidade.geral.enumeracoes.TipoDenuncia;
 import modelo.entidade.usuario.Aluno;
