@@ -17,7 +17,11 @@ import java.util.logging.Logger;
 @WebFilter(
         urlPatterns = { "/*" },
         initParams = {
-                @WebInitParam(name = "whitelist", value = "/login/*,/usuario/unidade-ensino/cadastrar,/")
+                @WebInitParam(name = "whitelist", value =
+                        "/login/*" +
+                        ",/usuario/unidade-ensino/cadastrar" +
+                        ",/"
+                )
         }
 )
 public class AutenticacaoFilter implements Filter {
