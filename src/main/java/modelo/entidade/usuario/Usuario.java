@@ -29,6 +29,14 @@ public abstract class Usuario {
         setEndereco(endereco);
     }
 
+    // Login constructor
+    public Usuario(Long id, String email, String senha, Cargo cargo) {
+        setId(id);
+        setEmail(email);
+        setSenha(senha);
+        setCargo(cargo);
+    }
+
     // Métodos de acesso
     public Long getId() {
         return id;

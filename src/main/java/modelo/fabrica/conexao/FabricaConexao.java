@@ -20,7 +20,9 @@ public class FabricaConexao {
         }
 
         String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE +
-                "?useSSL=false&serverTimezone=America/Sao_Paulo" +
+                "?useSSL=false" +
+                "&allowPublicKeyRetrieval=true" +
+                "&serverTimezone=America/Sao_Paulo" +
                 "&useUnicode=true&characterEncoding=UTF-8";
         return DriverManager.getConnection(url, USER, PASSWORD);
     }

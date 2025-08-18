@@ -81,4 +81,30 @@ public class Responsavel {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
+    // Outros métodos
+    @Override
+    public String toString() {
+        Long id = getId();
+        String nome = getNome();
+        String sobrenome = getSobrenome();
+        String cpf = getCpf();
+        String telefone = getTelefone();
+        Parentesco parentesco = getParentesco();
+        Endereco endereco = getEndereco();
+
+        String enderecoStr = endereco != null
+                ? endereco.toString().replaceAll("(?m)^", "    ")
+                : "null";
+
+        return "{\n" +
+                "  id: " + (id != null ? id : "null") + ",\n" +
+                "  nome: " + (nome != null ? "\"" + nome + "\"" : "null") + ",\n" +
+                "  sobrenome: " + (sobrenome != null ? "\"" + sobrenome + "\"" : "null") + ",\n" +
+                "  cpf: " + (cpf != null ? "\"" + cpf + "\"" : "null") + ",\n" +
+                "  telefone: " + (telefone != null ? "\"" + telefone + "\"" : "null") + ",\n" +
+                "  parentesco: " + (parentesco != null ? "\"" + parentesco + "\"" : "null") + ",\n" +
+                "  endereco: \n" + enderecoStr + "\n" +
+                "}";
+    }
 }

@@ -85,4 +85,29 @@ public class Turma {
     public void setPedagogo(Pedagogo pedagogo) {
         this.pedagogo = pedagogo;
     }
+
+    // Outros métodos
+    @Override
+    public String toString() {
+        Long id = getId();
+        String descricao = getDescricao();
+        Periodo periodo = getPeriodo();
+        LocalDateTime criadoEm = getCriadoEm();
+        LocalDateTime atualizadoEm = getAtualizadoEm();
+        Curso curso = getCurso();
+        Pedagogo pedagogo = getPedagogo();
+
+        Long cursoId = curso != null ? curso.getId() : null;
+        Long pedagogoId = pedagogo != null ? pedagogo.getId() : null;
+
+        return "{\n" +
+                "  id: " + (id != null ? id : "null") + ",\n" +
+                "  descricao: " + (descricao != null ? "\"" + descricao + "\"" : "null") + ",\n" +
+                "  periodo: " + (periodo != null ? "\"" + periodo + "\"" : "null") + ",\n" +
+                "  criadoEm: " + (criadoEm != null ? "\"" + criadoEm + "\"" : "null") + ",\n" +
+                "  atualizadoEm: " + (atualizadoEm != null ? "\"" + atualizadoEm + "\"" : "null") + ",\n" +
+                "  cursoId: " + (cursoId != null ? cursoId : "null") + ",\n" +
+                "  pedagogoId: " + (pedagogoId != null ? pedagogoId : "null") + "\n" +
+                "}";
+    }
 }
