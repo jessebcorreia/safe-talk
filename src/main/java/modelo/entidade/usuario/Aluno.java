@@ -24,8 +24,8 @@ public class Aluno extends UsuarioPessoaFisica {
     }
 
     // Login constructor
-    public Aluno(Long id, Cargo cargo) {
-        super(id, cargo);
+    public Aluno(Long id, String email, String senha, Cargo cargo) {
+        super(id, email, senha, cargo);
     }
 
     // Métodos de acesso

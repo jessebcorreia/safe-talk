@@ -21,8 +21,8 @@ public class Pedagogo extends UsuarioPessoaFisica {
     }
 
     // Login constructor
-    public Pedagogo(Long id, Cargo cargo) {
-        super(id, cargo);
+    public Pedagogo(Long id, String email, String senha, Cargo cargo) {
+        super(id, email, senha, cargo);
     }
 
     // Métodos de acesso
