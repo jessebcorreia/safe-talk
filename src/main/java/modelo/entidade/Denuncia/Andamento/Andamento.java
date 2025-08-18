@@ -1,4 +1,4 @@
-package modelo.entidade.Denuncia.Andamento;
+package modelo.entidade.denuncia.Andamento;
 
 import modelo.entidade.geral.enumeracoes.TipoAndamento;
 import modelo.entidade.usuario.Usuario;
@@ -65,4 +65,25 @@ public abstract class Andamento {
     public void setAutor(Usuario autor) {
         this.autor = autor;
     }
+
+    // Outros métodos
+    @Override
+    public String toString() {
+        Long id = getId();
+        String conteudo = getConteudo();
+        LocalDateTime criadoEm = getCriadoEm();
+        TipoAndamento tipoAndamento = getTipoAndamento();
+        Usuario autor = getAutor();
+
+        Long autorId = autor != null ? autor.getId() : null;
+
+        return "{\n" +
+                "  id: " + (id != null ? id : "null") + ",\n" +
+                "  conteudo: " + (conteudo != null ? "\"" + conteudo + "\"" : "null") + ",\n" +
+                "  criadoEm: " + (criadoEm != null ? "\"" + criadoEm + "\"" : "null") + ",\n" +
+                "  tipoAndamento: " + (tipoAndamento != null ? "\"" + tipoAndamento + "\"" : "null") + ",\n" +
+                "  autorId: " + (autorId != null ? autorId : "null") + "\n" +
+                "}";
+    }
+
 }

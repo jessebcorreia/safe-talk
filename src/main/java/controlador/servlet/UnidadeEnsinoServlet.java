@@ -127,6 +127,7 @@ public class UnidadeEnsinoServlet extends HttpServlet {
             return;
         }
 
+        System.out.println(unidadeEnsino);
         request.setAttribute("unidade-ensino", unidadeEnsino);
         request.getRequestDispatcher("/usuario/unidade-ensino-detalhe.jsp").forward(request, response);
     }

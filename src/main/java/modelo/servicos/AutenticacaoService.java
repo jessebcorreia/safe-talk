@@ -17,7 +17,7 @@ public class AutenticacaoService {
     }
 
     public Usuario autenticar(String email, String senha) {
-        try(Connection conexao = FabricaConexao.conectar()){
+        try(Connection conexao = FabricaConexao.conectar()) {
             Usuario usuario = usuarioDAO.recuperarUsuarioPeloEmail(conexao, email);
 
             if (usuario == null)
@@ -25,7 +25,7 @@ public class AutenticacaoService {
 
             return usuario.getSenha().equals(senha) ? usuario : null;
         } catch (SQLException e) {
-            Logger.getLogger(AutenticacaoService.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(AutenticacaoService.class.getName()).log(Level.SEVERE, "Usuário ou senha incorretos", e);
             return null;
         }
     }

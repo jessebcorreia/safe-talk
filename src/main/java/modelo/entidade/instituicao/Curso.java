@@ -85,4 +85,29 @@ public class Curso {
     public void setAnalista(Analista analista) {
         this.analista = analista;
     }
+
+    // Outros métodos
+    @Override
+    public String toString() {
+        Long id = getId();
+        String nome = getNome();
+        String descricao = getDescricao();
+        LocalDateTime criadoEm = getCriadoEm();
+        LocalDateTime atualizadoEm = getAtualizadoEm();
+        UnidadeEnsino unidadeEnsino = getUnidadeEnsino();
+        Analista analista = getAnalista();
+
+        Long unidadeEnsinoId = unidadeEnsino != null ? unidadeEnsino.getId() : null;
+        Long analistaId = analista != null ? analista.getId() : null;
+
+        return "{\n" +
+                "  id: " + (id != null ? id : "null") + ",\n" +
+                "  nome: " + (nome != null ? "\"" + nome + "\"" : "null") + ",\n" +
+                "  descricao: " + (descricao != null ? "\"" + descricao + "\"" : "null") + ",\n" +
+                "  criadoEm: " + (criadoEm != null ? "\"" + criadoEm + "\"" : "null") + ",\n" +
+                "  atualizadoEm: " + (atualizadoEm != null ? "\"" + atualizadoEm + "\"" : "null") + ",\n" +
+                "  unidadeEnsinoId: " + (unidadeEnsinoId != null ? unidadeEnsinoId : "null") + ",\n" +
+                "  analistaId: " + (analistaId != null ? analistaId : "null") + "\n" +
+                "}";
+    }
 }
