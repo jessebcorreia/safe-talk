@@ -5,16 +5,21 @@ import modelo.entidade.geral.Endereco;
 
 import java.time.LocalDateTime;
 
-public class UnidadeEnsino extends UsuarioPessoaJuridica {
+public class UnidadeEnsino extends Usuario {
+    private String nomeFantasia;
+    private String razaoSocial;
+    private String cnpj;
     private String descricao;
 
     // No args constructor
-    public UnidadeEnsino() {
-    }
+    public UnidadeEnsino() {}
 
     // All args constructor
     public UnidadeEnsino(Long id, String email, String senha, LocalDateTime criadoEm, LocalDateTime atualizadoEm, Cargo cargo, Endereco endereco, String nomeFantasia, String razaoSocial, String cnpj, String descricao) {
-        super(id, email, senha, criadoEm, atualizadoEm, cargo, endereco, nomeFantasia, razaoSocial, cnpj);
+        super(id, email, senha, criadoEm, atualizadoEm, cargo, endereco);
+        setNomeFantasia(nomeFantasia);
+        setRazaoSocial(razaoSocial);
+        setCnpj(cnpj);
         setDescricao(descricao);
     }
 
@@ -24,6 +29,30 @@ public class UnidadeEnsino extends UsuarioPessoaJuridica {
     }
 
     // Métodos de acesso
+    public String getNomeFantasia() {
+        return nomeFantasia;
+    }
+
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
+    }
+
+    public String getRazaoSocial() {
+        return razaoSocial;
+    }
+
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
     public String getDescricao() {
         return descricao;
     }

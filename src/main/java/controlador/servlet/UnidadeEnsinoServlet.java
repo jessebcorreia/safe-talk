@@ -1,12 +1,15 @@
 package controlador.servlet;
 
+import modelo.fabrica.conexao.FabricaConexao;
+import modelo.fabrica.conexao.FabricaConexaoImpl;
 import utils.ConverterDados;
 import modelo.dao.*;
 import modelo.entidade.geral.Endereco;
 import modelo.entidade.geral.enumeracoes.Cargo;
 import modelo.entidade.usuario.UnidadeEnsino;
-import modelo.servicos.UnidadeEnsinoService;
+import modelo.servicos.UnidadeEnsinoServiceImpl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,17 +20,16 @@ import java.time.LocalDateTime;
 
 @WebServlet("/usuario/unidade-ensino/*")
 public class UnidadeEnsinoServlet extends HttpServlet {
-    private UnidadeEnsinoService unidadeEnsinoService;
+    private UnidadeEnsinoServiceImpl unidadeEnsinoService;
 
     @Override
     public void init() throws ServletException {
         super.init();
 
-        EnderecoDAO enderecoDAO = new EnderecoDAOImpl();
-        UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
-        UnidadeEnsinoDAOImpl unidadeEnsinoDAO = new UnidadeEnsinoDAOImpl();
+        UnidadeEnsinoDAO unidadeEnsinoDAO = new UnidadeEnsinoDAOImpl();
+        FabricaConexao fabricaConexao = new FabricaConexaoImpl();
 
-        this.unidadeEnsinoService = new UnidadeEnsinoService(enderecoDAO, usuarioDAO, unidadeEnsinoDAO);
+        this.unidadeEnsinoService = new UnidadeEnsinoServiceImpl(unidadeEnsinoDAO, fabricaConexao);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class UnidadeEnsinoServlet extends HttpServlet {
 
         switch (endpoint) {
             case "/":
-                System.out.println("/");
+                mostrarTelaInicial(request, response);
                 break;
             case "/cadastrar":
                 cadastrarUnidadeEnsino(request, response);
@@ -67,51 +69,162 @@ public class UnidadeEnsinoServlet extends HttpServlet {
                 recuperarUnidadeEnsino(request, response);
                 break;
             case "/listar":
-                System.out.println("/listar");
+                listarUnidadesEnsino(request, response);
                 break;
             default:
                 System.out.println("Rota não mapeada");
-                // Se o endpoint for nulo ou não estiver mapeado, cai aqui
         }
+    }
+
+    private void mostrarTelaInicial(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void cadastrarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        UnidadeEnsino unidadeEnsino = criarUnidadeEnsinoMapeandoRequisicao(request);
-        boolean sucesso = unidadeEnsinoService.cadastrarUnidadeEnsino(unidadeEnsino);
-        if (!sucesso) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Falha ao cadastrar unidade");
-            return;
-        }
+            throws IOException, ServletException {
 
-        response.sendRedirect(request.getContextPath() + "/login");
+        // Tabela de endereço
+        String logradouro = request.getParameter("logradouro");
+        String numero = request.getParameter("numero");
+        String complemento = request.getParameter("complemento");
+        String bairro = request.getParameter("bairro");
+        String cidade = request.getParameter("cidade");
+        String estado = request.getParameter("estado");
+        String cep = request.getParameter("cep");
+        String pais = request.getParameter("pais");
+
+        // Cria uma instância da classe Endereco (endereco vira um objeto que vai ser passado dentro do construtor da UnidadeEnsino)
+        Endereco endereco = new Endereco(null, logradouro, numero, complemento, bairro, cidade, estado, cep, pais);
+
+        // Tabela de usuário
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        Cargo cargo = Cargo.UNIDADE_ENSINO;
+
+        // Tabela de Unidade de Ensino
+        String nomeFantasia = request.getParameter("nome_fantasia");
+        String razaoSocial = request.getParameter("razao_social");
+        String cnpj = request.getParameter("cnpj");
+        String descricao = request.getParameter("descricao");
+
+        // Cria uma instância da classe UnidadeEnsino
+        UnidadeEnsino unidadeEnsino = new UnidadeEnsino(null, email, senha, null, null, cargo, endereco, nomeFantasia, razaoSocial, cnpj, descricao);
+
+        try {
+            // Tenta cadastrar a unidade de ensino, com as informações que são passadas acima (como é um cadastro, os campos de "id" e "criado_em" são preenchidos automaticamente (pode lançar exceção)
+            unidadeEnsinoService.cadastrarUnidadeEnsino(unidadeEnsino);
+            response.sendRedirect(request.getContextPath() + "/app");
+
+        } catch (RuntimeException e) {
+            System.err.println("Erro ao cadastrar unidade de ensino: " + e.getMessage());
+            request.setAttribute("mensagemErro", "Não foi possível realizar o cadastro.");
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     private void atualizarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        UnidadeEnsino unidadeEnsino = criarUnidadeEnsinoMapeandoRequisicao(request);
+            throws IOException, ServletException {
+        Long usuarioId = ConverterDados.stringParaLong(request.getParameter("usuario_id"));
 
-        boolean sucesso = unidadeEnsinoService.atualizarUnidadeEnsino(unidadeEnsino);
-        if(!sucesso) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Falha ao atualizar unidade");
+        if (usuarioId == null) {
+            request.setAttribute("mensagemErro", "ID da unidade de ensino não informado ou inválido.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
             return;
         }
 
-        response.sendRedirect(request.getContextPath() + "/usuario/unidade-ensino");
+        // Tabela de endereço:
+        Long enderecoId = ConverterDados.stringParaLong(request.getParameter("endereco_id")); // Recupera o id para localizar a linha na tabela
+        String logradouro = request.getParameter("logradouro");
+        String numero = request.getParameter("numero");
+        String complemento = request.getParameter("complemento");
+        String bairro = request.getParameter("bairro");
+        String cidade = request.getParameter("cidade");
+        String estado = request.getParameter("estado");
+        String cep = request.getParameter("cep");
+        String pais = request.getParameter("pais");
+
+        // Cria uma instância da classe Endereco (endereco vira um objeto que vai ser passado dentro do construtor da UnidadeEnsino)
+        Endereco endereco = new Endereco(enderecoId, logradouro, numero, complemento, bairro, cidade, estado, cep, pais);
+
+        // Tabela de usuário (id do usuário recuperado no início do código)
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        Cargo cargo = Cargo.valueOf(request.getParameter("cargo"));
+        LocalDateTime criadoEm = ConverterDados.stringParaLocalDateTime(request.getParameter("criado_em"));
+        LocalDateTime atualizadoEm = ConverterDados.stringParaLocalDateTime(request.getParameter("atualizado_em"));
+
+        // Tabela de Unidade de Ensino (usa o usuario_id para localizar a linha na tabela):
+        String nomeFantasia = request.getParameter("nome_fantasia");
+        String razaoSocial = request.getParameter("razao_social");
+        String cnpj = request.getParameter("cnpj");
+        String descricao = request.getParameter("descricao");
+
+        // Cria uma instância da classe UnidadeEnsino
+        UnidadeEnsino unidadeEnsino = new UnidadeEnsino(usuarioId, email, senha, criadoEm, atualizadoEm, cargo, endereco, nomeFantasia, razaoSocial, cnpj, descricao);
+
+        try {
+            // Tenta atualizar a unidade de ensino, com as informações que são passadas acima (como é uma atualização, todos os campos foram informados)
+            unidadeEnsinoService.atualizarUnidadeEnsino(unidadeEnsino);
+            response.sendRedirect(request.getContextPath() + "/app");
+
+        } catch (RuntimeException e) {
+            System.err.println("Erro ao cadastrar unidade de ensino: " + e.getMessage());
+            request.setAttribute("mensagemErro", "Não foi possível atualizar a unidade de ensino.");
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     private void deletarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        Long idUsuario = ConverterDados.stringParaLong(request.getParameter("id_usuario"));
+            throws IOException, ServletException {
+        Long usuarioId = ConverterDados.stringParaLong(request.getParameter("usuario_id"));
 
-        boolean sucesso = unidadeEnsinoService.deletarUnidadeEnsinoPeloId(idUsuario);
-        if (!sucesso) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Falha ao deletar usuário");
+        if (usuarioId == null) {
+            request.setAttribute("mensagemErro", "ID da unidade de ensino não fornecido para exclusão.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
             return;
         }
 
-        response.sendRedirect(request.getContextPath() + "/usuario");
+        try {
+            // Tenta atualizar a unidade de ensino pelo id do usuário (deleta os registros nas outras tabelas em cascata)
+            unidadeEnsinoService.deletarUnidadeEnsinoPeloId(usuarioId);
+            response.sendRedirect(request.getContextPath() + "/usuario/unidade-ensino");
+
+        } catch (RuntimeException e) {
+            System.err.println("Erro ao deletar unidade de ensino: " + e.getMessage());
+            request.setAttribute("mensagemErro", "Não foi possível deletar a unidade de ensino. Tente novamente mais tarde.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
+        }
     }
+
+    private void recuperarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        System.out.println("recuperar usuário");
+    }
+
+    private void listarUnidadesEnsino(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        System.out.println("listar usuário");
+    }
+
+}
+
+
+
+
+
+
+
+
+    /*
 
     private void recuperarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -133,6 +246,7 @@ public class UnidadeEnsinoServlet extends HttpServlet {
     }
 
     private UnidadeEnsino criarUnidadeEnsinoMapeandoRequisicao(HttpServletRequest request) {
+        Long idEndereco = ConverterDados.stringParaLong(request.getParameter("id_endereco"));
         String logradouro = request.getParameter("logradouro");
         String numero = request.getParameter("numero");
         String complemento = request.getParameter("complemento");
@@ -142,19 +256,16 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         String cep = request.getParameter("cep");
         String pais = request.getParameter("pais");
 
-        Long idEndereco = ConverterDados.stringParaLong(request.getParameter("id_endereco"));
-
         Endereco endereco = new Endereco(idEndereco, logradouro, numero, complemento, bairro, cidade, estado, cep, pais);
 
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
+        Cargo cargo = Cargo.valueOf(request.getParameter("cargo"));
+
         String nomeFantasia = request.getParameter("nome_fantasia");
-        String razaoSocial = request.getParameter("razao-social");
+        String razaoSocial = request.getParameter("razao_social");
         String cnpj = request.getParameter("cnpj");
         String descricao = request.getParameter("descricao");
-
-        String cargoStr = request.getParameter("cargo");
-        Cargo cargo = Cargo.valueOf(cargoStr);
 
         Long idUsuario = ConverterDados.stringParaLong(request.getParameter("id_usuario"));
         LocalDateTime criadoEm = ConverterDados.stringParaLocalDateTime(request.getParameter("criado_em"));
@@ -162,4 +273,4 @@ public class UnidadeEnsinoServlet extends HttpServlet {
 
         return new UnidadeEnsino(idUsuario, email, senha, criadoEm, atualizadoEm, cargo, endereco, nomeFantasia, razaoSocial, cnpj, descricao);
     }
-}
+    */
