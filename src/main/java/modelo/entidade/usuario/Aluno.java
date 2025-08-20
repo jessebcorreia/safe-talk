@@ -2,9 +2,7 @@ package modelo.entidade.usuario;
 
 import modelo.entidade.geral.enumeracoes.Cargo;
 import modelo.entidade.geral.Endereco;
-import modelo.entidade.geral.Responsavel;
 import modelo.entidade.geral.enumeracoes.Sexo;
-import modelo.entidade.instituicao.Turma;
 
 import java.time.LocalDateTime;
 import java.util.List;

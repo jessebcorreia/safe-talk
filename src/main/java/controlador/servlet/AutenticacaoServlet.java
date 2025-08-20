@@ -57,20 +57,27 @@ public class AutenticacaoServlet extends HttpServlet {
             case "/":
                 mostrarTelaLogin(request, response);
                 break;
-            case "/iniciar-sessao":
+            case "/exec-iniciar-sessao":
                 iniciarSessao(request, response);
                 break;
-            case "/encerrar-sessao":
+            case "/exec-encerrar-sessao":
                 encerrarSessao(request, response);
                 break;
             default:
+                mostrarTelaErro(request, response);
                 break;
         }
     }
 
     private void mostrarTelaLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/home/login.html");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/login.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void mostrarTelaErro(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/erro.404.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -85,7 +92,7 @@ public class AutenticacaoServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             request.setAttribute("erroAutenticacao", "E-mail ou senha incorretos.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/home/login.html");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
             return;
         }

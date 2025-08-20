@@ -1,0 +1,32 @@
+:root {
+  --title-font-family: "Roboto", sans-serif;
+  --body-font-family: "";
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body,
+input,
+button,
+select,
+textarea {
+  font-size: 1.6rem;
+  font-family: var(--body-font-family);
+  color: black;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}

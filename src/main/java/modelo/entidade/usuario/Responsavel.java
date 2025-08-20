@@ -1,5 +1,6 @@
-package modelo.entidade.geral;
+package modelo.entidade.usuario;
 
+import modelo.entidade.geral.Endereco;
 import modelo.entidade.geral.enumeracoes.Parentesco;
 
 public class Responsavel {
