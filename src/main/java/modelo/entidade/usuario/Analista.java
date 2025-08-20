@@ -8,7 +8,11 @@ import modelo.entidade.instituicao.Curso;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Analista extends UsuarioPessoaFisica {
+public class Analista extends Usuario {
+    private String nome;
+    private String sobrenome;
+    private String cpf;
+    private Sexo sexo;
     private List<Curso> cursos;
 
     // No args constructor
@@ -16,7 +20,11 @@ public class Analista extends UsuarioPessoaFisica {
 
     // All args constructor
     public Analista(Long id, String email, String senha, LocalDateTime criadoEm, LocalDateTime atualizadoEm, Cargo cargo, Endereco endereco, String nome, String sobrenome, String cpf, Sexo sexo, List<Curso> cursos) {
-        super(id, email, senha, criadoEm, atualizadoEm, cargo, endereco, nome, sobrenome, cpf, sexo);
+        super(id, email, senha, criadoEm, atualizadoEm, cargo, endereco);
+        setNome(nome);
+        setSobrenome(sobrenome);
+        setCpf(cpf);
+        setSexo(sexo);
         setCursos(cursos);
     }
 
@@ -26,6 +34,38 @@ public class Analista extends UsuarioPessoaFisica {
     }
 
     // Métodos de acesso
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
     public List<Curso> getCursos() {
         return cursos;
     }

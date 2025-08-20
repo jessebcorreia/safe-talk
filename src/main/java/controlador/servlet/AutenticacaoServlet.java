@@ -1,11 +1,15 @@
 package controlador.servlet;
 
-import modelo.dao.UsuarioDAO;
-import modelo.dao.UsuarioDAOImpl;
+import modelo.dao.AutenticacaoDAO;
+import modelo.dao.AutenticacaoDAOImpl;
 import modelo.entidade.usuario.Usuario;
+import modelo.fabrica.conexao.FabricaConexao;
+import modelo.fabrica.conexao.FabricaConexaoImpl;
 import modelo.servicos.AutenticacaoService;
+import modelo.servicos.AutenticacaoServiceImpl;
 import utils.AtributosSessao;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +26,10 @@ public class AutenticacaoServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
 
-        UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
-        this.autenticacaoService = new AutenticacaoService(usuarioDAO);
+        AutenticacaoDAO autenticacaoDAO = new AutenticacaoDAOImpl();
+        FabricaConexao fabricaConexao = new FabricaConexaoImpl();
+
+        this.autenticacaoService = new AutenticacaoServiceImpl(autenticacaoDAO, fabricaConexao);
     }
 
     @Override
@@ -36,7 +42,8 @@ public class AutenticacaoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         String endpoint = request.getPathInfo();
         if (endpoint == null) endpoint = "/";
@@ -47,6 +54,9 @@ public class AutenticacaoServlet extends HttpServlet {
         }
 
         switch (endpoint) {
+            case "/":
+                mostrarTelaLogin(request, response);
+                break;
             case "/iniciar-sessao":
                 iniciarSessao(request, response);
                 break;
@@ -58,17 +68,27 @@ public class AutenticacaoServlet extends HttpServlet {
         }
     }
 
+    private void mostrarTelaLogin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/home/login.html");
+        dispatcher.forward(request, response);
+    }
+
     private void iniciarSessao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
 
-        if (email == null || senha == null)
-            return;
+        Usuario usuario = autenticacaoService.autenticarUsuario(email, senha);
 
-        Usuario usuario = autenticacaoService.autenticar(email, senha);
-        if (usuario == null)
+        if (usuario == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            request.setAttribute("erroAutenticacao", "E-mail ou senha incorretos.");
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/home/login.html");
+            dispatcher.forward(request, response);
             return;
+        }
 
         HttpSession sessaoAntiga = request.getSession(false);
         if (sessaoAntiga != null)
@@ -80,12 +100,19 @@ public class AutenticacaoServlet extends HttpServlet {
         sessao.setAttribute(AtributosSessao.USUARIO_CARGO, usuario.getCargo());
 
         sessao.setMaxInactiveInterval(30 * 60); // 30 * 60 = 1800 segundos | 30 minutos
+
+        response.sendRedirect(request.getContextPath() + "/usuario/unidade-ensino");
+
+        System.out.println("Usuário logado");
     }
 
     private void encerrarSessao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sessao = request.getSession(false);
+
         if (sessao != null)
             sessao.invalidate();
+
+        response.sendRedirect(request.getContextPath() + "/login");
     }
 }
