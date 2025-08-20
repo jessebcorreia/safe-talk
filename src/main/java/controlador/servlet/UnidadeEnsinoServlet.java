@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @WebServlet("/usuario/unidade-ensino/*")
 public class UnidadeEnsinoServlet extends HttpServlet {
@@ -53,9 +54,6 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         }
 
         switch (endpoint) {
-            case "/":
-                mostrarTelaInicial(request, response);
-                break;
             case "/cadastrar":
                 cadastrarUnidadeEnsino(request, response);
                 break;
@@ -71,14 +69,17 @@ public class UnidadeEnsinoServlet extends HttpServlet {
             case "/listar":
                 listarUnidadesEnsino(request, response);
                 break;
+            case "/formulario-cadastro":
+                mostrarTelaCadastro(request, response);
+                break;
             default:
                 System.out.println("Rota não mapeada");
         }
     }
 
-    private void mostrarTelaInicial(HttpServletRequest request, HttpServletResponse response)
+    private void mostrarTelaCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/unidade-ensino/cadastrar.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -207,70 +208,56 @@ public class UnidadeEnsinoServlet extends HttpServlet {
 
     private void recuperarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        System.out.println("recuperar usuário");
+        Long usuarioId = ConverterDados.stringParaLong(request.getParameter("usuario_id"));
+
+        if (usuarioId == null) {
+            request.setAttribute("mensagemErro", "ID da unidade de ensino não fornecido ou inválido para recuperação.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        try {
+            // Tenta buscar a unidade de ensino pelo ID
+            UnidadeEnsino unidadeEnsino = unidadeEnsinoService.recuperarUnidadeEnsinoPeloId(usuarioId);
+            System.out.println(unidadeEnsino);
+
+            if (unidadeEnsino == null) {
+                request.setAttribute("mensagemErro", "Unidade de ensino não encontrada para o ID: " + usuarioId);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            request.setAttribute("unidadeEnsino", unidadeEnsino);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (RuntimeException e) {
+            System.err.println("Erro ao recuperar unidade de ensino: " + e.getMessage());
+            request.setAttribute("mensagemErro", "Erro ao tentar recuperar a unidade de ensino.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     private void listarUnidadesEnsino(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        System.out.println("listar usuário");
+        try {
+            // Tenta listar todas as unidades de ensino
+            List<UnidadeEnsino> unidadesEnsino = unidadeEnsinoService.recuperarUnidadesDeEnsino();
+            System.out.println(unidadesEnsino);
+
+            request.setAttribute("unidadesEnsino", unidadesEnsino);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (RuntimeException e) {
+            System.err.println("Erro ao listar unidades de ensino: " + e.getMessage());
+            request.setAttribute("mensagemErro", "Não foi possível listar as unidades de ensino.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
 }
-
-
-
-
-
-
-
-
-    /*
-
-    private void recuperarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Long idUsuario = ConverterDados.stringParaLong(request.getParameter("id_usuario"));
-        if (idUsuario == null){
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "O id não foi informado");
-            return;
-        }
-
-        UnidadeEnsino unidadeEnsino = unidadeEnsinoService.recuperarUnidadeEnsinoPeloId(idUsuario);
-        if (unidadeEnsino == null){
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "A unidade de ensino não foi encontrada");
-            return;
-        }
-
-        System.out.println(unidadeEnsino);
-        request.setAttribute("unidade-ensino", unidadeEnsino);
-        request.getRequestDispatcher("/usuario/unidade-ensino-detalhe.jsp").forward(request, response);
-    }
-
-    private UnidadeEnsino criarUnidadeEnsinoMapeandoRequisicao(HttpServletRequest request) {
-        Long idEndereco = ConverterDados.stringParaLong(request.getParameter("id_endereco"));
-        String logradouro = request.getParameter("logradouro");
-        String numero = request.getParameter("numero");
-        String complemento = request.getParameter("complemento");
-        String bairro = request.getParameter("bairro");
-        String cidade = request.getParameter("cidade");
-        String estado = request.getParameter("estado");
-        String cep = request.getParameter("cep");
-        String pais = request.getParameter("pais");
-
-        Endereco endereco = new Endereco(idEndereco, logradouro, numero, complemento, bairro, cidade, estado, cep, pais);
-
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        Cargo cargo = Cargo.valueOf(request.getParameter("cargo"));
-
-        String nomeFantasia = request.getParameter("nome_fantasia");
-        String razaoSocial = request.getParameter("razao_social");
-        String cnpj = request.getParameter("cnpj");
-        String descricao = request.getParameter("descricao");
-
-        Long idUsuario = ConverterDados.stringParaLong(request.getParameter("id_usuario"));
-        LocalDateTime criadoEm = ConverterDados.stringParaLocalDateTime(request.getParameter("criado_em"));
-        LocalDateTime atualizadoEm = ConverterDados.stringParaLocalDateTime(request.getParameter("atualizado_em"));
-
-        return new UnidadeEnsino(idUsuario, email, senha, criadoEm, atualizadoEm, cargo, endereco, nomeFantasia, razaoSocial, cnpj, descricao);
-    }
-    */

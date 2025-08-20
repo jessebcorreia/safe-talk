@@ -20,6 +20,7 @@ import java.util.logging.Logger;
                 @WebInitParam(name = "whitelist", value =
                         "/login/*" +
                         ",/usuario/unidade-ensino/cadastrar" +
+                        ",/usuario/unidade-ensino/formulario-cadastro" +
                         ",/"
                 )
         }

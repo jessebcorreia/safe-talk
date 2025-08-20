@@ -101,7 +101,7 @@ public class AutenticacaoServlet extends HttpServlet {
 
         sessao.setMaxInactiveInterval(30 * 60); // 30 * 60 = 1800 segundos | 30 minutos
 
-        response.sendRedirect(request.getContextPath() + "/usuario/unidade-ensino");
+        response.sendRedirect(request.getContextPath() + "/usuario/unidade-ensino/formulario-cadastro");
 
         System.out.println("Usuário logado");
     }
