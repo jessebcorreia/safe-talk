@@ -18,13 +18,17 @@ import java.util.logging.Logger;
         urlPatterns = { "/*" },
         initParams = {
                 @WebInitParam(name = "whitelist", value =
-                        "/login/*" +
+                        "/assets/css/*" +
+                        "/assets/js/*" +
+                        "/assets/img/*" +
+                        ",/login/*" +
                         ",/usuario/unidade-ensino/cadastrar" +
-                        ",/usuario/unidade-ensino/formulario-cadastro" +
+                        ",/usuario/unidade-ensino/exec-cadastrar" +
                         ",/"
                 )
         }
 )
+
 public class AutenticacaoFilter implements Filter {
     private static final Logger LOGGER = Logger.getLogger(AutenticacaoFilter.class.getName());
 

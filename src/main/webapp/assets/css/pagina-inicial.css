@@ -1,0 +1,11 @@
+main {
+  display: grid;
+  gap: 3rem;
+}
+
+section {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: space-around;
+}

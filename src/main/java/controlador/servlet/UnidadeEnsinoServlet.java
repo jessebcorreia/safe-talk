@@ -54,35 +54,74 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         }
 
         switch (endpoint) {
+            // Rotas para exibir as telas (exemplo: usuario/unidade-ensino/cadastrar - vai mostrar a tela de cadastro)
+            case "/":
+                mostrarTelaInicial(request, response);
+                break;
             case "/cadastrar":
-                cadastrarUnidadeEnsino(request, response);
+                mostrarTelaCadastrar(request, response);
                 break;
-            case "/atualizar":
-                atualizarUnidadeEnsino(request, response);
-                break;
-            case "/deletar":
-                deletarUnidadeEnsino(request, response);
-                break;
-            case "/recuperar":
-                recuperarUnidadeEnsino(request, response);
+            case "/exibir":
+                mostrarTelaExibir(request, response);
                 break;
             case "/listar":
+                mostrarTelaListar(request, response);
+                break;
+
+            // Rotas para executar ações (exemplo: o formulário tem a action /usuario/unidade-ensino/exec-cadastrar - isso vai enviar o formulário para essa rota)
+            case "/exec-cadastrar":
+                cadastrarUnidadeEnsino(request, response);
+                break;
+            case "/exec-atualizar":
+                atualizarUnidadeEnsino(request, response);
+                break;
+            case "/exec-deletar":
+                deletarUnidadeEnsino(request, response);
+                break;
+            case "/exec-recuperar":
+                recuperarUnidadeEnsino(request, response);
+                break;
+            case "/exec-listar":
                 listarUnidadesEnsino(request, response);
                 break;
-            case "/formulario-cadastro":
-                mostrarTelaCadastro(request, response);
-                break;
             default:
-                System.out.println("Rota não mapeada");
+                mostrarTelaErro(request, response);
         }
     }
 
-    private void mostrarTelaCadastro(HttpServletRequest request, HttpServletResponse response)
+    // Métodos para exibir as telas
+    private void mostrarTelaInicial(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/unidade-ensino/cadastrar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
         dispatcher.forward(request, response);
     }
 
+    private void mostrarTelaCadastrar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/cadastrar.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void mostrarTelaExibir(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/exibir.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void mostrarTelaListar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/listar.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void mostrarTelaErro(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/erro-404.jsp");
+        dispatcher.forward(request, response);
+    }
+
+
+    // Métodos para executar ações
     private void cadastrarUnidadeEnsino(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
@@ -116,13 +155,13 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         try {
             // Tenta cadastrar a unidade de ensino, com as informações que são passadas acima (como é um cadastro, os campos de "id" e "criado_em" são preenchidos automaticamente (pode lançar exceção)
             unidadeEnsinoService.cadastrarUnidadeEnsino(unidadeEnsino);
-            response.sendRedirect(request.getContextPath() + "/app");
+            response.sendRedirect(request.getContextPath() + "/login");
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao cadastrar unidade de ensino: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível realizar o cadastro.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/login.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -133,7 +172,7 @@ public class UnidadeEnsinoServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID da unidade de ensino não informado ou inválido.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -171,13 +210,13 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         try {
             // Tenta atualizar a unidade de ensino, com as informações que são passadas acima (como é uma atualização, todos os campos foram informados)
             unidadeEnsinoService.atualizarUnidadeEnsino(unidadeEnsino);
-            response.sendRedirect(request.getContextPath() + "/app");
+            response.sendRedirect(request.getContextPath() + "/usuario/unidade-ensino");
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao cadastrar unidade de ensino: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível atualizar a unidade de ensino.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -188,7 +227,7 @@ public class UnidadeEnsinoServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID da unidade de ensino não fornecido para exclusão.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -201,7 +240,7 @@ public class UnidadeEnsinoServlet extends HttpServlet {
         } catch (RuntimeException e) {
             System.err.println("Erro ao deletar unidade de ensino: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível deletar a unidade de ensino. Tente novamente mais tarde.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -212,7 +251,7 @@ public class UnidadeEnsinoServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID da unidade de ensino não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -224,19 +263,19 @@ public class UnidadeEnsinoServlet extends HttpServlet {
 
             if (unidadeEnsino == null) {
                 request.setAttribute("mensagemErro", "Unidade de ensino não encontrada para o ID: " + usuarioId);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
                 dispatcher.forward(request, response);
                 return;
             }
 
             request.setAttribute("unidadeEnsino", unidadeEnsino);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao recuperar unidade de ensino: " + e.getMessage());
             request.setAttribute("mensagemErro", "Erro ao tentar recuperar a unidade de ensino.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -249,13 +288,13 @@ public class UnidadeEnsinoServlet extends HttpServlet {
             System.out.println(unidadesEnsino);
 
             request.setAttribute("unidadesEnsino", unidadesEnsino);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar unidades de ensino: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível listar as unidades de ensino.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/visualizacao/app/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
         }
     }
