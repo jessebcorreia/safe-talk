@@ -3,7 +3,7 @@ package modelo.dao;
 import modelo.entidade.geral.Endereco;
 import modelo.entidade.geral.enumeracoes.Cargo;
 import modelo.entidade.geral.enumeracoes.Sexo;
-import modelo.entidade.usuario.Analista;
+import modelo.entidade.usuario.Pedagogo;
 import utils.ConverterDados;
 
 import java.sql.*;
@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AnalistaDAOImpl implements AnalistaDAO {
+public class PedagogoDAOImpl implements PedagogoDAO {
 
     @Override
-    public void cadastrarAnalista(Connection conexao, Analista analista) throws SQLException {
+    public void cadastrarPedagogo(Connection conexao, Pedagogo pedagogo) throws SQLException {
         String sqlEndereco = "INSERT INTO endereco (logradouro, numero, complemento, bairro, cidade, estado, cep, pais) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         String sqlUsuario = "INSERT INTO usuario (email, senha, cargo, endereco_id) VALUES (?, ?, ?, ?)";
-        String sqlAnalista = "INSERT INTO usuario_analista (usuario_id, nome, sobrenome, cpf, sexo) VALUES (?, ?, ?, ?, ?)";
+        String sqlPedagogo = "INSERT INTO usuario_pedagogo (usuario_id, nome, sobrenome, cpf, sexo) VALUES (?, ?, ?, ?, ?)";
 
         Long enderecoId = null;
         Long usuarioId = null;
@@ -28,7 +28,7 @@ public class AnalistaDAOImpl implements AnalistaDAO {
          * conexao.setAutoCommit(false) inicia uma transação, desabilitando o commit automático
          * 1º - Inserir endereço e recuperar id do endereço gerado
          * 2º - Inserir usuário (utilizando o endereco_id) e recuperar id do usuário gerado
-         * 3º - Inserir a analista (utilizando o usuario_id)
+         * 3º - Inserir o pedagogo (utilizando o usuario_id)
          * conexao.commit() salva no banco de dados | Se der erro em qualquer das etapas acima, o commit não é executado (é feito rollback)
          */
 
@@ -37,14 +37,14 @@ public class AnalistaDAOImpl implements AnalistaDAO {
 
             // 1. Inserir endereço e recuperar id gerado
             try (PreparedStatement psEndereco = conexao.prepareStatement(sqlEndereco, Statement.RETURN_GENERATED_KEYS)) {
-                psEndereco.setString(1, analista.getEndereco().getLogradouro());
-                psEndereco.setString(2, analista.getEndereco().getNumero());
-                psEndereco.setString(3, analista.getEndereco().getComplemento());
-                psEndereco.setString(4, analista.getEndereco().getBairro());
-                psEndereco.setString(5, analista.getEndereco().getCidade());
-                psEndereco.setString(6, analista.getEndereco().getEstado());
-                psEndereco.setString(7, analista.getEndereco().getCep());
-                psEndereco.setString(8, analista.getEndereco().getPais());
+                psEndereco.setString(1, pedagogo.getEndereco().getLogradouro());
+                psEndereco.setString(2, pedagogo.getEndereco().getNumero());
+                psEndereco.setString(3, pedagogo.getEndereco().getComplemento());
+                psEndereco.setString(4, pedagogo.getEndereco().getBairro());
+                psEndereco.setString(5, pedagogo.getEndereco().getCidade());
+                psEndereco.setString(6, pedagogo.getEndereco().getEstado());
+                psEndereco.setString(7, pedagogo.getEndereco().getCep());
+                psEndereco.setString(8, pedagogo.getEndereco().getPais());
 
                 psEndereco.executeUpdate();
 
@@ -58,9 +58,9 @@ public class AnalistaDAOImpl implements AnalistaDAO {
 
             // 2. Inserir usuário (utilizando o endereco_id) e recuperar id gerado
             try (PreparedStatement psUsuario = conexao.prepareStatement(sqlUsuario, Statement.RETURN_GENERATED_KEYS)) {
-                psUsuario.setString(1, analista.getEmail());
-                psUsuario.setString(2, analista.getSenha());
-                psUsuario.setString(3, Cargo.ANALISTA.toString());
+                psUsuario.setString(1, pedagogo.getEmail());
+                psUsuario.setString(2, pedagogo.getSenha());
+                psUsuario.setString(3, Cargo.PEDAGOGO.toString());
                 psUsuario.setLong(4, enderecoId);
 
                 psUsuario.executeUpdate();
@@ -73,15 +73,15 @@ public class AnalistaDAOImpl implements AnalistaDAO {
                 }
             }
 
-            // 3. Inserir analista (utilizando usuario_id)
-            try (PreparedStatement psAnalista = conexao.prepareStatement(sqlAnalista)) {
-                psAnalista.setLong(1, usuarioId);
-                psAnalista.setString(2, analista.getNome());
-                psAnalista.setString(3, analista.getSobrenome());
-                psAnalista.setString(4, analista.getCpf());
-                psAnalista.setString(5, analista.getSexo().toString());
+            // 3. Inserir pedagogo (utilizando usuario_id)
+            try (PreparedStatement psPedagogo = conexao.prepareStatement(sqlPedagogo)) {
+                psPedagogo.setLong(1, usuarioId);
+                psPedagogo.setString(2, pedagogo.getNome());
+                psPedagogo.setString(3, pedagogo.getSobrenome());
+                psPedagogo.setString(4, pedagogo.getCpf());
+                psPedagogo.setString(5, pedagogo.getSexo().toString());
 
-                psAnalista.executeUpdate();
+                psPedagogo.executeUpdate();
             }
 
             conexao.commit();
@@ -97,17 +97,17 @@ public class AnalistaDAOImpl implements AnalistaDAO {
     }
 
     @Override
-    public void atualizarAnalista(Connection conexao, Analista analista) throws SQLException {
+    public void atualizarPedagogo(Connection conexao, Pedagogo pedagogo) throws SQLException {
         String sqlEndereco = "UPDATE endereco SET logradouro=?, numero=?, complemento=?, bairro=?, cidade=?, estado=?, cep=?, pais=? WHERE id = ?";
         String sqlUsuario = "UPDATE usuario SET email=?, senha=?, cargo=? WHERE id = ?";
-        String sqlAnalista = "UPDATE usuario_analista SET nome=?, sobrenome=?, cpf=?, sexo=? WHERE usuario_id = ?";
+        String sqlPedagogo = "UPDATE usuario_pedagogo SET nome=?, sobrenome=?, cpf=?, sexo=? WHERE usuario_id = ?";
 
         /*
          *Na atualização, a operação no banco de dados será dividida em:
          * conexao.setAutoCommit(false) inicia uma transação, desabilitando o commit automático
          * 1º - Atualizar endereço
          * 2º - Atualizar usuário
-         * 3º - Atualizar analista
+         * 3º - Atualizar pedagogo
          * conexao.commit() salva no banco de dados | Se der erro em qualquer das etapas acima, o commit não é executado (é feito rollback)
          */
 
@@ -116,44 +116,44 @@ public class AnalistaDAOImpl implements AnalistaDAO {
 
             // 1. Atualizar endereco
             try (PreparedStatement psEndereco = conexao.prepareStatement(sqlEndereco)) {
-                psEndereco.setString(1, analista.getEndereco().getLogradouro());
-                psEndereco.setString(2, analista.getEndereco().getNumero());
-                psEndereco.setString(3, analista.getEndereco().getComplemento());
-                psEndereco.setString(4, analista.getEndereco().getBairro());
-                psEndereco.setString(5, analista.getEndereco().getCidade());
-                psEndereco.setString(6, analista.getEndereco().getEstado());
-                psEndereco.setString(7, analista.getEndereco().getCep());
-                psEndereco.setString(8, analista.getEndereco().getPais());
-                psEndereco.setLong(9, analista.getEndereco().getId());
+                psEndereco.setString(1, pedagogo.getEndereco().getLogradouro());
+                psEndereco.setString(2, pedagogo.getEndereco().getNumero());
+                psEndereco.setString(3, pedagogo.getEndereco().getComplemento());
+                psEndereco.setString(4, pedagogo.getEndereco().getBairro());
+                psEndereco.setString(5, pedagogo.getEndereco().getCidade());
+                psEndereco.setString(6, pedagogo.getEndereco().getEstado());
+                psEndereco.setString(7, pedagogo.getEndereco().getCep());
+                psEndereco.setString(8, pedagogo.getEndereco().getPais());
+                psEndereco.setLong(9, pedagogo.getEndereco().getId());
 
                 int linhasAfetadas = psEndereco.executeUpdate();
                 if (linhasAfetadas == 0)
-                    throw new SQLException("Não foi possível atualizar o endereço com id: " + analista.getEndereco().getId());
+                    throw new SQLException("Não foi possível atualizar o endereço com id: " + pedagogo.getEndereco().getId());
             }
 
             // 2) Atualizar usuario
             try (PreparedStatement psUsuario = conexao.prepareStatement(sqlUsuario)) {
-                psUsuario.setString(1, analista.getEmail());
-                psUsuario.setString(2, analista.getSenha()); // idealmente já com hash
-                psUsuario.setString(3, Cargo.ANALISTA.name());
-                psUsuario.setLong(4, analista.getId());
+                psUsuario.setString(1, pedagogo.getEmail());
+                psUsuario.setString(2, pedagogo.getSenha()); // idealmente já com hash
+                psUsuario.setString(3, Cargo.PEDAGOGO.name());
+                psUsuario.setLong(4, pedagogo.getId());
 
                 int linhasAfetadas = psUsuario.executeUpdate();
                 if (linhasAfetadas == 0)
-                    throw new SQLException("Não foi possível atualizar o usuário com id: " + analista.getId());
+                    throw new SQLException("Não foi possível atualizar o usuário com id: " + pedagogo.getId());
             }
 
-            // 3) Atualizar analista
-            try (PreparedStatement psAnalista = conexao.prepareStatement(sqlAnalista)) {
-                psAnalista.setString(1, analista.getNome());
-                psAnalista.setString(2, analista.getSobrenome());
-                psAnalista.setString(3, analista.getCpf());
-                psAnalista.setString(4, analista.getSexo().toString());
-                psAnalista.setLong(5, analista.getId());
+            // 3) Atualizar pedagogo
+            try (PreparedStatement psPedagogo = conexao.prepareStatement(sqlPedagogo)) {
+                psPedagogo.setString(1, pedagogo.getNome());
+                psPedagogo.setString(2, pedagogo.getSobrenome());
+                psPedagogo.setString(3, pedagogo.getCpf());
+                psPedagogo.setString(4, pedagogo.getSexo().toString());
+                psPedagogo.setLong(5, pedagogo.getId());
 
-                int linhasAfetadas = psAnalista.executeUpdate();
+                int linhasAfetadas = psPedagogo.executeUpdate();
                 if (linhasAfetadas == 0)
-                    throw new SQLException("Não foi possível atualizar o usuário com id: " + analista.getId());
+                    throw new SQLException("Não foi possível atualizar o usuário com id: " + pedagogo.getId());
             }
 
             conexao.commit();
@@ -169,12 +169,12 @@ public class AnalistaDAOImpl implements AnalistaDAO {
     }
 
     @Override
-    public void deletarAnalistaPeloId(Connection conexao, Long id) throws SQLException {
+    public void deletarPedagogoPeloId(Connection conexao, Long id) throws SQLException {
         String sqlUsuario = "DELETE FROM usuario WHERE id = ?";
 
         /*
          * Na deleção, a operação no banco de dados é bastante simples:
-         * Deleta apenas o usuário. O endereço e analista vinculados são deletados automaticamente, em castaca.
+         * Deleta apenas o usuário. O endereço e pedagogo vinculados são deletados automaticamente, em castaca.
          */
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sqlUsuario)) {
@@ -187,16 +187,16 @@ public class AnalistaDAOImpl implements AnalistaDAO {
     }
 
     @Override
-    public Analista recuperarAnalistaPeloId(Connection conexao, Long id) throws SQLException {
+    public Pedagogo recuperarPedagogoPeloId(Connection conexao, Long id) throws SQLException {
         String sql = "SELECT u.id, u.email, u.criado_em, u.atualizado_em, u.cargo, "
                 + "e.id AS endereco_id, e.logradouro, e.numero, e.complemento, e.bairro, e.cidade, e.estado, e.cep, e.pais,"
-                + "a.nome, a.sobrenome, a.cpf, a.sexo "
+                + "p.nome, p.sobrenome, p.cpf, p.sexo "
                 + "FROM usuario u "
-                + "INNER JOIN usuario_analista a ON u.id = a.usuario_id "
+                + "INNER JOIN usuario_pedagogo p ON u.id = p.usuario_id "
                 + "INNER JOIN endereco e ON u.endereco_id = e.id "
                 + "WHERE u.id = ?";
 
-        Analista analista = null;
+        Pedagogo pedagogo = null;
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
@@ -214,41 +214,41 @@ public class AnalistaDAOImpl implements AnalistaDAO {
                     endereco.setCep(resultSet.getString("cep"));
                     endereco.setPais(resultSet.getString("pais"));
 
-                    analista = new Analista();
-                    analista.setId(resultSet.getLong("id"));
-                    analista.setEmail(resultSet.getString("email"));
-                    analista.setCriadoEm(ConverterDados.timestampParaLocalDateTime(resultSet.getTimestamp("criado_em")));
-                    analista.setAtualizadoEm(ConverterDados.timestampParaLocalDateTime(resultSet.getTimestamp("atualizado_em")));
-                    analista.setCargo(Cargo.valueOf(resultSet.getString("cargo")));
-                    analista.setEndereco(endereco);
+                    pedagogo = new Pedagogo();
+                    pedagogo.setId(resultSet.getLong("id"));
+                    pedagogo.setEmail(resultSet.getString("email"));
+                    pedagogo.setCriadoEm(ConverterDados.timestampParaLocalDateTime(resultSet.getTimestamp("criado_em")));
+                    pedagogo.setAtualizadoEm(ConverterDados.timestampParaLocalDateTime(resultSet.getTimestamp("atualizado_em")));
+                    pedagogo.setCargo(Cargo.valueOf(resultSet.getString("cargo")));
+                    pedagogo.setEndereco(endereco);
 
-                    analista.setNome(resultSet.getString("nome"));
-                    analista.setSobrenome(resultSet.getString("sobrenome"));
-                    analista.setCpf(resultSet.getString("cpf"));
-                    analista.setSexo(Sexo.valueOf(resultSet.getString("sexo")));
+                    pedagogo.setNome(resultSet.getString("nome"));
+                    pedagogo.setSobrenome(resultSet.getString("sobrenome"));
+                    pedagogo.setCpf(resultSet.getString("cpf"));
+                    pedagogo.setSexo(Sexo.valueOf(resultSet.getString("sexo")));
                 }
             }
 
         } catch (SQLException e) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Erro ao recuperar analista com ID: " + id, e);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Erro ao recuperar pedagogo com ID: " + id, e);
             throw e;
         }
 
-        return analista;
+        return pedagogo;
     }
 
     @Override
-    public List<Analista> recuperarAnalistasPeloCurso(Connection conexao, Long cursoId) throws SQLException {
+    public List<Pedagogo> recuperarPedagogosPelaTurma(Connection conexao, Long cursoId) throws SQLException {
         String sql = "SELECT u.id, u.email, u.criado_em, u.atualizado_em, u.cargo, "
                 + "e.id AS endereco_id, e.logradouro, e.numero, e.complemento, e.bairro, e.cidade, e.estado, e.cep, e.pais, "
-                + "a.nome, a.sobrenome, a.cpf, a.sexo "
+                + "p.nome, p.sobrenome, p.cpf, p.sexo "
                 + "FROM usuario u "
-                + "INNER JOIN usuario_analista a ON u.id = a.usuario_id "
+                + "INNER JOIN usuario_pedagogo p ON u.id = p.usuario_id "
                 + "INNER JOIN endereco e ON e.id = u.endereco_id "
-                + "INNER JOIN curso c ON c.analista_id = u.id "
-                + "WHERE c.id = ?";
+                + "INNER JOIN turma t ON t.pedagogo_id = u.id "
+                + "WHERE t.id = ?";
 
-        List<Analista> analistas = new ArrayList<>();
+        List<Pedagogo> pedagogos = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
 
@@ -267,28 +267,28 @@ public class AnalistaDAOImpl implements AnalistaDAO {
                     endereco.setCep(resultSet.getString("cep"));
                     endereco.setPais(resultSet.getString("pais"));
 
-                    Analista analista = new Analista();
-                    analista.setId(resultSet.getLong("id"));
-                    analista.setEmail(resultSet.getString("email"));
-                    analista.setCriadoEm(ConverterDados.timestampParaLocalDateTime(resultSet.getTimestamp("criado_em")));
-                    analista.setAtualizadoEm(ConverterDados.timestampParaLocalDateTime(resultSet.getTimestamp("atualizado_em")));
-                    analista.setCargo(Cargo.valueOf(resultSet.getString("cargo")));
-                    analista.setEndereco(endereco);
+                    Pedagogo pedagogo = new Pedagogo();
+                    pedagogo.setId(resultSet.getLong("id"));
+                    pedagogo.setEmail(resultSet.getString("email"));
+                    pedagogo.setCriadoEm(ConverterDados.timestampParaLocalDateTime(resultSet.getTimestamp("criado_em")));
+                    pedagogo.setAtualizadoEm(ConverterDados.timestampParaLocalDateTime(resultSet.getTimestamp("atualizado_em")));
+                    pedagogo.setCargo(Cargo.valueOf(resultSet.getString("cargo")));
+                    pedagogo.setEndereco(endereco);
 
-                    analista.setNome(resultSet.getString("nome"));
-                    analista.setSobrenome(resultSet.getString("sobrenome"));
-                    analista.setCpf(resultSet.getString("cpf"));
-                    analista.setSexo(Sexo.valueOf(resultSet.getString("sexo")));
+                    pedagogo.setNome(resultSet.getString("nome"));
+                    pedagogo.setSobrenome(resultSet.getString("sobrenome"));
+                    pedagogo.setCpf(resultSet.getString("cpf"));
+                    pedagogo.setSexo(Sexo.valueOf(resultSet.getString("sexo")));
 
-                    analistas.add(analista);
+                    pedagogos.add(pedagogo);
                 }
             }
 
         } catch (SQLException e) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Erro ao recuperar lista de analistas", e);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Erro ao recuperar lista de pedagogos", e);
             throw e;
         }
 
-        return analistas;
+        return pedagogos;
     }
 }

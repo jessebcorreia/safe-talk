@@ -1,14 +1,14 @@
 package controlador.servlet;
 
-import modelo.dao.AnalistaDAO;
-import modelo.dao.AnalistaDAOImpl;
+import modelo.dao.PedagogoDAO;
+import modelo.dao.PedagogoDAOImpl;
 import modelo.entidade.geral.Endereco;
 import modelo.entidade.geral.enumeracoes.Cargo;
 import modelo.entidade.geral.enumeracoes.Sexo;
-import modelo.entidade.usuario.Analista;
+import modelo.entidade.usuario.Pedagogo;
 import modelo.fabrica.conexao.FabricaConexao;
 import modelo.fabrica.conexao.FabricaConexaoImpl;
-import modelo.servicos.AnalistaServiceImpl;
+import modelo.servicos.PedagogoServiceImpl;
 import utils.ConverterDados;
 
 import javax.servlet.RequestDispatcher;
@@ -21,18 +21,18 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@WebServlet("/usuario/analista/*")
-public class AnalistaServlet extends HttpServlet {
-    private AnalistaServiceImpl analistaService;
+@WebServlet("/usuario/pedagogo/*")
+public class PedagogoServlet extends HttpServlet {
+    private PedagogoServiceImpl pedagogoService;
 
     @Override
     public void init() throws ServletException {
         super.init();
 
-        AnalistaDAO analistaDAO = new AnalistaDAOImpl();
+        PedagogoDAO pedagogoDAO = new PedagogoDAOImpl();
         FabricaConexao fabricaConexao = new FabricaConexaoImpl();
 
-        this.analistaService = new AnalistaServiceImpl(analistaDAO, fabricaConexao);
+        this.pedagogoService = new PedagogoServiceImpl(pedagogoDAO, fabricaConexao);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class AnalistaServlet extends HttpServlet {
         }
 
         switch (endpoint) {
-            // Rotas para exibir as telas (exemplo: usuario/analista/cadastrar - vai mostrar a tela de cadastro)
+            // Rotas para exibir as telas (exemplo: usuario/pedagogo/cadastrar - vai mostrar a tela de cadastro)
             case "/":
                 mostrarTelaInicial(request, response);
                 break;
@@ -70,21 +70,21 @@ public class AnalistaServlet extends HttpServlet {
                 mostrarTelaListar(request, response);
                 break;
 
-            // Rotas para executar ações (exemplo: o formulário tem a action /usuario/analista/exec-cadastrar - isso vai enviar o formulário para essa rota)
+            // Rotas para executar ações (exemplo: o formulário tem a action /usuario/pedagogo/exec-cadastrar - isso vai enviar o formulário para essa rota)
             case "/exec-cadastrar":
-                cadastrarAnalista(request, response);
+                cadastrarPedagogo(request, response);
                 break;
             case "/exec-atualizar":
-                atualizarAnalista(request, response);
+                atualizarPedagogo(request, response);
                 break;
             case "/exec-deletar":
-                deletarAnalista(request, response);
+                deletarPedagogo(request, response);
                 break;
             case "/exec-recuperar":
-                recuperarAnalista(request, response);
+                recuperarPedagogo(request, response);
                 break;
             case "/exec-listar":
-                listarAnalistas(request, response);
+                listarPedagogos(request, response);
                 break;
             default:
                 mostrarTelaErro(request, response);
@@ -94,25 +94,25 @@ public class AnalistaServlet extends HttpServlet {
     // Métodos para exibir as telas
     private void mostrarTelaInicial(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaCadastrar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/cadastrar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/cadastrar.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaExibir(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/exibir.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/exibir.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaListar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/listar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/listar.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -124,7 +124,7 @@ public class AnalistaServlet extends HttpServlet {
 
 
     // Métodos para executar ações
-    private void cadastrarAnalista(HttpServletRequest request, HttpServletResponse response)
+    private void cadastrarPedagogo(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
         // Tabela de endereço
@@ -137,44 +137,44 @@ public class AnalistaServlet extends HttpServlet {
         String cep = request.getParameter("cep");
         String pais = request.getParameter("pais");
 
-        // Cria uma instância da classe Endereco (endereco vira um objeto que vai ser passado dentro do construtor da Analista)
+        // Cria uma instância da classe Endereco (endereco vira um objeto que vai ser passado dentro do construtor da Pedagogo)
         Endereco endereco = new Endereco(null, logradouro, numero, complemento, bairro, cidade, estado, cep, pais);
 
         // Tabela de usuário
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
-        Cargo cargo = Cargo.ANALISTA;
+        Cargo cargo = Cargo.PEDAGOGO;
 
-        // Tabela de Analista
+        // Tabela de Pedagogo
         String nome = request.getParameter("nome");
         String sobrenome = request.getParameter("sobrenome");
         String cpf = request.getParameter("cpf");
         Sexo sexo = Sexo.valueOf(request.getParameter("sexo"));
 
-        // Cria uma instância da classe Analista
-        Analista analista = new Analista(null, email, senha, null, null, cargo, endereco, nome, sobrenome, cpf, sexo, null);
+        // Cria uma instância da classe Pedagogo
+        Pedagogo pedagogo = new Pedagogo(null, email, senha, null, null, cargo, endereco, nome, sobrenome, cpf, sexo, null);
 
         try {
-            // Tenta cadastrar o analista, com as informações que são passadas acima (como é um cadastro, os campos de "id" e "criado_em" são preenchidos automaticamente (pode lançar exceção)
-            analistaService.cadastrarAnalista(analista);
-            response.sendRedirect(request.getContextPath() + "/usuario/analista");
+            // Tenta cadastrar o pedagogo, com as informações que são passadas acima (como é um cadastro, os campos de "id" e "criado_em" são preenchidos automaticamente (pode lançar exceção)
+            pedagogoService.cadastrarPedagogo(pedagogo);
+            response.sendRedirect(request.getContextPath() + "/usuario/pedagogo");
 
         } catch (RuntimeException e) {
-            System.err.println("Erro ao cadastrar analista: " + e.getMessage());
+            System.err.println("Erro ao cadastrar pedagogo: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível realizar o cadastro.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }
 
-    private void atualizarAnalista(HttpServletRequest request, HttpServletResponse response)
+    private void atualizarPedagogo(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         Long usuarioId = ConverterDados.stringParaLong(request.getParameter("usuario_id"));
 
         if (usuarioId == null) {
-            request.setAttribute("mensagemErro", "ID do analista não informado ou inválido.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            request.setAttribute("mensagemErro", "ID do pedagogo não informado ou inválido.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -190,7 +190,7 @@ public class AnalistaServlet extends HttpServlet {
         String cep = request.getParameter("cep");
         String pais = request.getParameter("pais");
 
-        // Cria uma instância da classe Endereco (endereco vira um objeto que vai ser passado dentro do construtor do Analista)
+        // Cria uma instância da classe Endereco (endereco vira um objeto que vai ser passado dentro do construtor da Pedagogo)
         Endereco endereco = new Endereco(enderecoId, logradouro, numero, complemento, bairro, cidade, estado, cep, pais);
 
         // Tabela de usuário (id do usuário recuperado no início do código)
@@ -200,111 +200,111 @@ public class AnalistaServlet extends HttpServlet {
         LocalDateTime criadoEm = ConverterDados.stringParaLocalDateTime(request.getParameter("criado_em"));
         LocalDateTime atualizadoEm = ConverterDados.stringParaLocalDateTime(request.getParameter("atualizado_em"));
 
-        // Tabela de Analista (usa o usuario_id para localizar a linha na tabela):
+        // Tabela de Pedagogo (usa o usuario_id para localizar a linha na tabela):
         String nome = request.getParameter("nome");
         String sobrenome = request.getParameter("sobrenome");
         String cpf = request.getParameter("cpf");
         Sexo sexo = Sexo.valueOf(request.getParameter("sexo"));
 
-        // Cria uma instância da classe Analista
-        Analista analista = new Analista(usuarioId, email, senha, criadoEm, atualizadoEm, cargo, endereco, nome, sobrenome, cpf, sexo, null);
+        // Cria uma instância da classe Pedagogo
+        Pedagogo pedagogo = new Pedagogo(usuarioId, email, senha, criadoEm, atualizadoEm, cargo, endereco, nome, sobrenome, cpf, sexo, null);
 
         try {
-            // Tenta atualizar a analista, com as informações que são passadas acima (como é uma atualização, todos os campos foram informados)
-            analistaService.atualizarAnalista(analista);
-            response.sendRedirect(request.getContextPath() + "/usuario/analista");
+            // Tenta atualizar o pedagogo, com as informações que são passadas acima (como é uma atualização, todos os campos foram informados)
+            pedagogoService.atualizarPedagogo(pedagogo);
+            response.sendRedirect(request.getContextPath() + "/usuario/pedagogo");
 
         } catch (RuntimeException e) {
-            System.err.println("Erro ao cadastrar analista: " + e.getMessage());
-            request.setAttribute("mensagemErro", "Não foi possível atualizar a analista.");
+            System.err.println("Erro ao cadastrar pedagogo: " + e.getMessage());
+            request.setAttribute("mensagemErro", "Não foi possível atualizar o pedagogo.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }
 
-    private void deletarAnalista(HttpServletRequest request, HttpServletResponse response)
+    private void deletarPedagogo(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         Long usuarioId = ConverterDados.stringParaLong(request.getParameter("usuario_id"));
 
         if (usuarioId == null) {
-            request.setAttribute("mensagemErro", "ID do analista não fornecido para exclusão.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            request.setAttribute("mensagemErro", "ID do pedagogo não fornecido para exclusão.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
 
         try {
-            // Tenta atualizar a analista pelo id do usuário (deleta os registros nas outras tabelas em cascata)
-            analistaService.deletarAnalistaPeloId(usuarioId);
-            response.sendRedirect(request.getContextPath() + "/usuario/analista");
+            // Tenta atualizar o pedagogo pelo id do usuário (deleta os registros nas outras tabelas em cascata)
+            pedagogoService.deletarPedagogoPeloId(usuarioId);
+            response.sendRedirect(request.getContextPath() + "/usuario/pedagogo");
 
         } catch (RuntimeException e) {
-            System.err.println("Erro ao deletar analista: " + e.getMessage());
-            request.setAttribute("mensagemErro", "Não foi possível deletar a analista. Tente novamente mais tarde.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            System.err.println("Erro ao deletar pedagogo: " + e.getMessage());
+            request.setAttribute("mensagemErro", "Não foi possível deletar o pedagogo. Tente novamente mais tarde.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }
 
-    private void recuperarAnalista(HttpServletRequest request, HttpServletResponse response)
+    private void recuperarPedagogo(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         Long usuarioId = ConverterDados.stringParaLong(request.getParameter("usuario_id"));
 
         if (usuarioId == null) {
-            request.setAttribute("mensagemErro", "ID do analista não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            request.setAttribute("mensagemErro", "ID do pedagogo não fornecido ou inválido para recuperação.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
 
         try {
-            // Tenta buscar a analista pelo ID
-            Analista analista = analistaService.recuperarAnalistaPeloId(usuarioId);
-            System.out.println(analista);
+            // Tenta buscar o pedagogo pelo ID
+            Pedagogo pedagogo = pedagogoService.recuperarPedagogoPeloId(usuarioId);
+            System.out.println(pedagogo);
 
-            if (analista == null) {
-                request.setAttribute("mensagemErro", "Analista não encontrado para o ID: " + usuarioId);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            if (pedagogo == null) {
+                request.setAttribute("mensagemErro", "Pedagogo não encontrado para o ID: " + usuarioId);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
                 dispatcher.forward(request, response);
                 return;
             }
 
-            request.setAttribute("analista", analista);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            request.setAttribute("pedagogo", pedagogo);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
-            System.err.println("Erro ao recuperar analista: " + e.getMessage());
-            request.setAttribute("mensagemErro", "Erro ao tentar recuperar a analista.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            System.err.println("Erro ao recuperar pedagogo: " + e.getMessage());
+            request.setAttribute("mensagemErro", "Erro ao tentar recuperar o pedagogo.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }
 
-    private void listarAnalistas(HttpServletRequest request, HttpServletResponse response)
+    private void listarPedagogos(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        Long cursoId = ConverterDados.stringParaLong(request.getParameter("curso_id"));
+        Long turmaId = ConverterDados.stringParaLong(request.getParameter("turma_id"));
 
-        if (cursoId == null) {
-            request.setAttribute("mensagemErro", "ID do analista não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+        if (turmaId == null) {
+            request.setAttribute("mensagemErro", "ID do pedagogo não fornecido ou inválido para recuperação.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
 
         try {
-            List<Analista> analistas = analistaService.recuperarAnalistasPeloCurso(cursoId);
-            System.out.println(analistas);
+            List<Pedagogo> pedagogos = pedagogoService.recuperarPedagogosPelaTurma(turmaId);
+            System.out.println(pedagogos);
 
-            request.setAttribute("analistas", analistas);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            request.setAttribute("pedagogos", pedagogos);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
-            System.err.println("Erro ao listar analistas: " + e.getMessage());
-            request.setAttribute("mensagemErro", "Não foi possível listar os analistas.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            System.err.println("Erro ao listar pedagogos: " + e.getMessage());
+            request.setAttribute("mensagemErro", "Não foi possível listar os pedagogos.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }
