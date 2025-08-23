@@ -3,6 +3,7 @@ package modelo.entidade.usuario;
 import modelo.entidade.geral.enumeracoes.Cargo;
 import modelo.entidade.geral.Endereco;
 import modelo.entidade.geral.enumeracoes.Sexo;
+import modelo.entidade.instituicao.Turma;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,18 +14,20 @@ public class Aluno extends Usuario {
     private String cpf;
     private Sexo sexo;
     private List<Responsavel> responsaveis;
+    private Turma turma;
 
     // No args constructor
     public Aluno() {}
 
     // All args constructor
-    public Aluno(Long id, String email, String senha, LocalDateTime criadoEm, LocalDateTime atualizadoEm, Cargo cargo, Endereco endereco, String nome, String sobrenome, String cpf, Sexo sexo, List<Responsavel> responsaveis) {
+    public Aluno(Long id, String email, String senha, LocalDateTime criadoEm, LocalDateTime atualizadoEm, Cargo cargo, Endereco endereco, String nome, String sobrenome, String cpf, Sexo sexo, List<Responsavel> responsaveis, Turma turma) {
         super(id, email, senha, criadoEm, atualizadoEm, cargo, endereco);
         setNome(nome);
         setSobrenome(sobrenome);
         setCpf(cpf);
         setSexo(sexo);
         setResponsaveis(responsaveis);
+        setTurma(turma);
     }
 
     // Login constructor
@@ -71,6 +74,14 @@ public class Aluno extends Usuario {
 
     public void setResponsaveis(List<Responsavel> responsaveis) {
         this.responsaveis = responsaveis;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
 
     // Outros métodos
