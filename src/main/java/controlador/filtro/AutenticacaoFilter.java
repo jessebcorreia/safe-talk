@@ -19,8 +19,8 @@ import java.util.logging.Logger;
         initParams = {
                 @WebInitParam(name = "whitelist", value =
                         "/assets/css/*" +
-                        "/assets/js/*" +
-                        "/assets/img/*" +
+                        ",/assets/js/*" +
+                        ",/assets/img/*" +
                         ",/login/*" +
                         ",/usuario/unidade-ensino/cadastrar" +
                         ",/usuario/unidade-ensino/exec-cadastrar" +
