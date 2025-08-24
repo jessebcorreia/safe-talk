@@ -6,7 +6,6 @@
 <body>
 <h1>Cadastrar Analista</h1>
     <form action="<c:url value='/usuario/analista/exec-cadastrar'" method="post"></form>
-
     <fieldset>
         <legend>Informações de Endereço</legend>
     <div class="enderoco">
