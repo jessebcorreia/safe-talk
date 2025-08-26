@@ -2,6 +2,7 @@ package modelo.entidade.denuncia;
 
 import modelo.entidade.denuncia.andamento.Andamento;
 import modelo.entidade.geral.Endereco;
+import modelo.entidade.geral.enumeracoes.SituacaoAnaliseDenuncia;
 import modelo.entidade.geral.enumeracoes.TipoDenuncia;
 import modelo.entidade.usuario.Aluno;
 import modelo.entidade.usuario.Analista;
@@ -13,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Denuncia {
-    private long id;
+    private Long id;
     private String titulo;
     private String conteudo;
     private TipoDenuncia tipoDenuncia;
+    private SituacaoAnaliseDenuncia situacaoAnaliseDenuncia;
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
     private LocalDateTime encerradoEm;
@@ -24,38 +26,40 @@ public class Denuncia {
     private Endereco localFato;
     private Usuario autor;
     private Analista analista;
+    private Pedagogo pedagogo;
+
     private List<Aluno> vitimas = new ArrayList<>();
-    private List<Usuario> agressores = new ArrayList<>();
-    private List<Pedagogo> pedagogos = new ArrayList<>();
+    private List<Aluno> agressores = new ArrayList<>();
     private List<Andamento> andamentos = new ArrayList<>();
 
     // No args constructor
     public Denuncia() {}
 
     // All args constructor
-    public Denuncia(long id, String titulo, String conteudo, TipoDenuncia tipoDenuncia, LocalDateTime criadoEm, LocalDateTime atualizadoEm, LocalDateTime encerradoEm, Endereco localFato, Usuario autor, Analista analista, List<Aluno> vitimas, List<Usuario> agressores, List<Pedagogo> pedagogos, List<Andamento> andamentos) {
+    public Denuncia(Long id, String titulo, String conteudo, TipoDenuncia tipoDenuncia, SituacaoAnaliseDenuncia situacaoAnaliseDenuncia, LocalDateTime criadoEm, LocalDateTime atualizadoEm, LocalDateTime encerradoEm, Endereco localFato, Usuario autor, Analista analista, Pedagogo pedagogo, List<Aluno> vitimas, List<Aluno> agressores, List<Andamento> andamentos) {
         setId(id);
         setTitulo(titulo);
         setConteudo(conteudo);
         setTipoDenuncia(tipoDenuncia);
+        setSituacaoAnaliseDenuncia(situacaoAnaliseDenuncia);
         setCriadoEm(criadoEm);
         setAtualizadoEm(atualizadoEm);
         setEncerradoEm(encerradoEm);
         setLocalFato(localFato);
         setAutor(autor);
         setAnalista(analista);
+        setPedagogo(pedagogo);
         setVitimas(vitimas);
         setAgressores(agressores);
-        setPedagogos(pedagogos);
         setAndamentos(andamentos);
     }
 
     // Métodos de acesso
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -81,6 +85,14 @@ public class Denuncia {
 
     public void setTipoDenuncia(TipoDenuncia tipoDenuncia) {
         this.tipoDenuncia = tipoDenuncia;
+    }
+
+    public SituacaoAnaliseDenuncia getSituacaoAnaliseDenuncia() {
+        return situacaoAnaliseDenuncia;
+    }
+
+    public void setSituacaoAnaliseDenuncia(SituacaoAnaliseDenuncia situacaoAnaliseDenuncia) {
+        this.situacaoAnaliseDenuncia = situacaoAnaliseDenuncia;
     }
 
     public LocalDateTime getCriadoEm() {
@@ -131,6 +143,14 @@ public class Denuncia {
         this.analista = analista;
     }
 
+    public Pedagogo getPedagogo() {
+        return pedagogo;
+    }
+
+    public void setPedagogo(Pedagogo pedagogo) {
+        this.pedagogo = pedagogo;
+    }
+
     public List<Aluno> getVitimas() {
         return vitimas;
     }
@@ -139,20 +159,12 @@ public class Denuncia {
         this.vitimas = vitimas;
     }
 
-    public List<Usuario> getAgressores() {
+    public List<Aluno> getAgressores() {
         return agressores;
     }
 
-    public void setAgressores(List<Usuario> agressores) {
+    public void setAgressores(List<Aluno> agressores) {
         this.agressores = agressores;
-    }
-
-    public List<Pedagogo> getPedagogos() {
-        return pedagogos;
-    }
-
-    public void setPedagogos(List<Pedagogo> pedagogos) {
-        this.pedagogos = pedagogos;
     }
 
     public List<Andamento> getAndamentos() {
@@ -166,7 +178,7 @@ public class Denuncia {
     // Outros métodos
     @Override
     public String toString() {
-        long id = getId();
+        Long id = getId();
         String titulo = getTitulo();
         String conteudo = getConteudo();
         TipoDenuncia tipoDenuncia = getTipoDenuncia();

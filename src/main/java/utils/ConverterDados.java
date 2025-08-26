@@ -32,4 +32,8 @@ public class ConverterDados {
     public static LocalDateTime timestampParaLocalDateTime(Timestamp timestamp) {
         return timestamp != null ? timestamp.toLocalDateTime() : null;
     }
+
+    public static Timestamp localDateTimeParaTimestamp(LocalDateTime localDateTime) {
+        return localDateTime != null ? Timestamp.valueOf(localDateTime) : null;
+    }
 }
