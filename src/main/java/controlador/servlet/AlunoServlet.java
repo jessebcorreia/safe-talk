@@ -64,9 +64,7 @@ public class AlunoServlet extends HttpServlet {
             case "/cadastrar":
                 mostrarTelaCadastrar(request, response);
                 break;
-            case "/exibir":
-                mostrarTelaExibir(request, response);
-                break;
+
             case "/listar":
                 mostrarTelaListar(request, response);
                 break;
@@ -81,7 +79,7 @@ public class AlunoServlet extends HttpServlet {
             case "/exec-deletar":
                 deletarAluno(request, response);
                 break;
-            case "/exec-recuperar":
+            case "/exibir":
                 recuperarAluno(request, response);
                 break;
             case "/exec-listar":
@@ -257,6 +255,7 @@ public class AlunoServlet extends HttpServlet {
         Long usuarioId = ConverterDados.stringParaLong(request.getParameter("usuario_id"));
 
         if (usuarioId == null) {
+            System.out.println("Deu ruim");
             request.setAttribute("mensagemErro", "ID do aluno não fornecido ou inválido para recuperação.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
@@ -276,7 +275,7 @@ public class AlunoServlet extends HttpServlet {
             }
 
             request.setAttribute("aluno", aluno);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/exibir.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
@@ -304,7 +303,7 @@ public class AlunoServlet extends HttpServlet {
             System.out.println(alunos);
 
             request.setAttribute("alunos", alunos);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/listar.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
