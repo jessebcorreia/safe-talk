@@ -4,8 +4,8 @@
 <header>
     <div class="logo-wrapper">
         <div class="nome-sistema-wrapper">
-            <span>Safe</span>
-            <span>Talk</span>
+            <span class="nome">Safe</span>
+            <span class="nome">Talk</span>
         </div>
         <img
             class="logo"
@@ -33,11 +33,11 @@
             </li>
 
             <li>
-                <a href="<c:url value='/usuario/unidade-ensino/cadastrar'/>">Cadastrar</a>
+                <a class="acesso" href="<c:url value='/usuario/unidade-ensino/cadastrar'/>">Cadastrar</a>
             </li>
 
             <li>
-                <a href="<c:url value='/login'/>">Entrar</a>
+                <a class="acesso" href="<c:url value='/login'/>">Entrar</a>
             </li>
         </ul>
     </nav>

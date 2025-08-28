@@ -1,16 +1,17 @@
 :root {
-  --title-font-family: "Roboto", sans-serif;
-  --body-font-family: "";
+    --fonte-titulo: "League Spartan", sans-serif;
+    --fonte-corpo: "Inter", sans-serif;
+
+    --azul-escuro-base: #110F6C;
+    --laranja-base: #FB6200;
+    --branco: #FFFFFF;
+    --preto: #000000;
 }
 
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 62.5%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 body,
@@ -18,12 +19,13 @@ input,
 button,
 select,
 textarea {
-  font-size: 1.6rem;
-  font-family: var(--body-font-family);
-  color: black;
+    line-height: 100%;
+    font-family: var(--fonte-corpo);
+    color: black;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 

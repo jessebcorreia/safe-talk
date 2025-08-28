@@ -94,31 +94,31 @@ public class PedagogoServlet extends HttpServlet {
     // Métodos para exibir as telas
     private void mostrarTelaInicial(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaCadastrar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/cadastrar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/cadastrar.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaExibir(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/exibir.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/exibir.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaListar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/listar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/listar.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaErro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/erro-404.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/inicio/erro-404.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -163,7 +163,7 @@ public class PedagogoServlet extends HttpServlet {
             System.err.println("Erro ao cadastrar pedagogo: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível realizar o cadastro.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -174,7 +174,7 @@ public class PedagogoServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID do pedagogo não informado ou inválido.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -218,7 +218,7 @@ public class PedagogoServlet extends HttpServlet {
             System.err.println("Erro ao cadastrar pedagogo: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível atualizar o pedagogo.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -229,7 +229,7 @@ public class PedagogoServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID do pedagogo não fornecido para exclusão.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -242,7 +242,7 @@ public class PedagogoServlet extends HttpServlet {
         } catch (RuntimeException e) {
             System.err.println("Erro ao deletar pedagogo: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível deletar o pedagogo. Tente novamente mais tarde.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -253,7 +253,7 @@ public class PedagogoServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID do pedagogo não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -265,19 +265,19 @@ public class PedagogoServlet extends HttpServlet {
 
             if (pedagogo == null) {
                 request.setAttribute("mensagemErro", "Pedagogo não encontrado para o ID: " + usuarioId);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
                 dispatcher.forward(request, response);
                 return;
             }
 
             request.setAttribute("pedagogo", pedagogo);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao recuperar pedagogo: " + e.getMessage());
             request.setAttribute("mensagemErro", "Erro ao tentar recuperar o pedagogo.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -288,7 +288,7 @@ public class PedagogoServlet extends HttpServlet {
 
         if (turmaId == null) {
             request.setAttribute("mensagemErro", "ID do pedagogo não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -298,13 +298,13 @@ public class PedagogoServlet extends HttpServlet {
             System.out.println(pedagogos);
 
             request.setAttribute("pedagogos", pedagogos);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar pedagogos: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível listar os pedagogos.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/pedagogo/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/pedagogo/index.jsp");
             dispatcher.forward(request, response);
         }
     }

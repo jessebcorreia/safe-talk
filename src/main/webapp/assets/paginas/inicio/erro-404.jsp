@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <%@ include file="/assets/components/header-deslogado.jsp" %>
+    <%@ include file="/assets/componentes/header-deslogado.jsp" %>
 
     <h1> Página não encontrada </h1>
     <h1> Erro 404 </h1>
