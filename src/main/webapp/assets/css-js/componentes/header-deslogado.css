@@ -21,6 +21,7 @@ header {
     font-size: 32px;
     font-family: var(--fonte-titulo);
     font-weight: bold;
+    color: var(--azul-escuro-base);
 }
 
 .logo {
@@ -57,7 +58,6 @@ nav a:hover {
 nav a.acesso {
     color: var(--branco);
     background-color: var(--azul-escuro-base);
-    transition: background-color 0.9s;
 }
 
 nav a.acesso:hover {

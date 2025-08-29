@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <header>
-    <div class="logo-wrapper">
+    <a class="logo-wrapper" href="<c:url value='/'/>">
         <div class="nome-sistema-wrapper">
             <span class="nome">Safe</span>
             <span class="nome">Talk</span>
@@ -12,7 +12,7 @@
             src="<c:url value='/assets/img/logo.svg'/>"
             alt="Logo SafeTalk"
         />
-    </div>
+    </a>
 
     <nav>
         <ul>

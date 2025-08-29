@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Safe Talk</title>
 
+    <link rel="icon" href="<c:url value='/assets/img/favicon.svg'/>" type="image/svg+xml">
     <link
         rel="stylesheet"
         type="text/css"
@@ -21,9 +22,9 @@
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=League+Spartan:wght@100..900&display=swap"
     />
-    <link rel="stylesheet" href="<c:url value='/assets/css/global.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css/componentes/header-deslogado.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css/inicio/login.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css-js/global.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css-js/componentes/header-deslogado.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css-js/inicio/login.css'/>" />
 </head>
 
 <body>
