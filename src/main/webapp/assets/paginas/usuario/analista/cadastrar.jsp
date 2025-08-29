@@ -10,7 +10,7 @@
     <title>Safe Talk</title>
 
     <link rel="stylesheet" href="<c:url value='/assets/css/global.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css/header-deslogado.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/componentes/header-deslogado.css'/>" />
 </head>
 
 <body>

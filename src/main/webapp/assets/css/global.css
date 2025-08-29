@@ -19,16 +19,22 @@ input,
 button,
 select,
 textarea {
-    line-height: 100%;
+    font-size: 16px;
+    line-height: 1.6;
     font-family: var(--fonte-corpo);
     color: black;
 }
 
 ul,
 ol {
-  list-style: none;
+    list-style: none;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
+}
+
+strong {
+    color: var(--laranja-base);
+    font-weight: bold;
 }

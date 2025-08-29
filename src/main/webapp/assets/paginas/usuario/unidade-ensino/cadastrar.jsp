@@ -10,7 +10,7 @@
     <title>Cadastrar Unidade de Ensino</title>
 
     <link rel="stylesheet" href="<c:url value='/assets/css/global.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css/header-deslogado.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/componentes/header-deslogado.css'/>" />
     <link rel="stylesheet" href="<c:url value='/assets/css/unidade-ensino-cadastrar.css'/>" />
 </head>
 
