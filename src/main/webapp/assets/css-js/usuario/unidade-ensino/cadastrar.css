@@ -111,5 +111,6 @@
 }
 
 .cadastro-concluido {
+    display: none;
     padding: 0 120px;
 }

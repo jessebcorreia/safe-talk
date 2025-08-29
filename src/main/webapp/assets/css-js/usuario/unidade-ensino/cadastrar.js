@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+        window.scrollTo({ top: 0, behavior: "smooth" });0
         // Define a lógica de aparição dos botões
         const primeiroPasso = passoAtual == 0;
         const passosIntermediarios = passoAtual < paineis.length - 1;
