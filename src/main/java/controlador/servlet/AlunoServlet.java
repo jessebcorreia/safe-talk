@@ -64,9 +64,8 @@ public class AlunoServlet extends HttpServlet {
             case "/cadastrar":
                 mostrarTelaCadastrar(request, response);
                 break;
-
             case "/listar":
-                mostrarTelaListar(request, response);
+                listarAlunos(request, response);
                 break;
 
             // Rotas para executar ações (exemplo: o formulário tem a action /usuario/aluno/exec-cadastrar - isso vai enviar o formulário para essa rota)
