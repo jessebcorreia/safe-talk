@@ -71,13 +71,13 @@ public class AutenticacaoServlet extends HttpServlet {
 
     private void mostrarTelaLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/login.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/inicio/login.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaErro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/erro.404.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/inicio/erro.404.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -92,7 +92,7 @@ public class AutenticacaoServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             request.setAttribute("erroAutenticacao", "E-mail ou senha incorretos.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/unidade-ensino/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/unidade-ensino/index.jsp");
             dispatcher.forward(request, response);
             return;
         }

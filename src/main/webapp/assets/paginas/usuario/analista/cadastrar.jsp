@@ -9,12 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Safe Talk</title>
 
-    <link rel="stylesheet" href="<c:url value='/assets/css/global.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css/header-deslogado.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css-js/global.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css-js/componentes/header-deslogado.css'/>" />
 </head>
 
 <body>
-    <%@ include file="/assets/components/header-deslogado.jsp" %>
+    <%@ include file="/assets/componentes/header-deslogado.jsp" %>
 
     <h1>Cadastrar Analista</h1>
 

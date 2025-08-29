@@ -95,31 +95,31 @@ public class AlunoServlet extends HttpServlet {
     // Métodos para exibir as telas
     private void mostrarTelaInicial(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaCadastrar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/cadastrar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/cadastrar.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaExibir(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/exibir.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/exibir.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaListar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/listar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/listar.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaErro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/erro-404.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/inicio/erro-404.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -166,7 +166,7 @@ public class AlunoServlet extends HttpServlet {
             System.err.println("Erro ao cadastrar aluno: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível realizar o cadastro.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -177,7 +177,7 @@ public class AlunoServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID do aluno não informado ou inválido.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -223,7 +223,7 @@ public class AlunoServlet extends HttpServlet {
             System.err.println("Erro ao cadastrar aluno: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível atualizar o aluno.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -234,7 +234,7 @@ public class AlunoServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID do aluno não fornecido para exclusão.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -247,7 +247,7 @@ public class AlunoServlet extends HttpServlet {
         } catch (RuntimeException e) {
             System.err.println("Erro ao deletar aluno: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível deletar o aluno. Tente novamente mais tarde.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -258,7 +258,7 @@ public class AlunoServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID do aluno não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -270,19 +270,19 @@ public class AlunoServlet extends HttpServlet {
 
             if (aluno == null) {
                 request.setAttribute("mensagemErro", "Aluno não encontrado para o ID: " + usuarioId);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
                 dispatcher.forward(request, response);
                 return;
             }
 
             request.setAttribute("aluno", aluno);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao recuperar aluno: " + e.getMessage());
             request.setAttribute("mensagemErro", "Erro ao tentar recuperar o aluno.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -294,7 +294,7 @@ public class AlunoServlet extends HttpServlet {
 
         if (turmaId == null) {
             request.setAttribute("mensagemErro", "ID do aluno não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -304,13 +304,13 @@ public class AlunoServlet extends HttpServlet {
             System.out.println(alunos);
 
             request.setAttribute("alunos", alunos);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar alunos: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível listar os alunos.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
             dispatcher.forward(request, response);
         }
     }

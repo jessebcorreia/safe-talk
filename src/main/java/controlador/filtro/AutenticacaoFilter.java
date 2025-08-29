@@ -18,13 +18,16 @@ import java.util.logging.Logger;
         urlPatterns = { "/*" },
         initParams = {
                 @WebInitParam(name = "whitelist", value =
-                        "/assets/css/*" +
-                        ",/assets/js/*" +
+                        "/assets/css-js/*" +
                         ",/assets/img/*" +
+                        ",/" +
+                        ",/como-denunciar" +
+                        ",/relatorios" +
+                        ",/contato" +
+                        ",/planos" +
                         ",/login/*" +
                         ",/usuario/unidade-ensino/cadastrar" +
-                        ",/usuario/unidade-ensino/exec-cadastrar" +
-                        ",/"
+                        ",/usuario/unidade-ensino/exec-cadastrar"
                 )
         }
 )

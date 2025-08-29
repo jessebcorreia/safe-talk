@@ -2,17 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <header>
-    <div class="logo-wrapper">
+    <a class="logo-wrapper" href="<c:url value='/'/>">
         <div class="nome-sistema-wrapper">
-            <span>Safe</span>
-            <span>Talk</span>
+            <span class="nome">Safe</span>
+            <span class="nome">Talk</span>
         </div>
         <img
             class="logo"
             src="<c:url value='/assets/img/logo.svg'/>"
             alt="Logo SafeTalk"
         />
-    </div>
+    </a>
 
     <nav>
         <ul>
@@ -33,11 +33,11 @@
             </li>
 
             <li>
-                <a href="<c:url value='/usuario/unidade-ensino/cadastrar'/>">Cadastrar</a>
+                <a class="acesso" href="<c:url value='/usuario/unidade-ensino/cadastrar'/>">Cadastrar</a>
             </li>
 
             <li>
-                <a href="<c:url value='/login'/>">Entrar</a>
+                <a class="acesso" href="<c:url value='/login'/>">Entrar</a>
             </li>
         </ul>
     </nav>

@@ -124,31 +124,31 @@ public class DenunciaServlet extends HttpServlet {
     // Métodos para exibir as telas
     private void mostrarTelaInicial(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaCadastrar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/cadastrar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/cadastrar.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaExibir(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/exibir.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/exibir.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaListar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/listar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/listar.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaErro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/erro-404.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/inicio/erro-404.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -215,7 +215,7 @@ public class DenunciaServlet extends HttpServlet {
             System.err.println("Erro ao cadastrar denúncia: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível realizar o cadastro.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -226,7 +226,7 @@ public class DenunciaServlet extends HttpServlet {
 
         if (denunciaId == null) {
             request.setAttribute("mensagemErro", "ID da denúncia não informado ou inválido.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -289,7 +289,7 @@ public class DenunciaServlet extends HttpServlet {
             System.err.println("Erro ao atualizar denúncia: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível atualizar.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -300,7 +300,7 @@ public class DenunciaServlet extends HttpServlet {
 
         if (denunciaId == null) {
             request.setAttribute("mensagemErro", "ID da denúncia não fornecido para exclusão.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -312,7 +312,7 @@ public class DenunciaServlet extends HttpServlet {
         } catch (RuntimeException e) {
             System.err.println("Erro ao deletar denúncia: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível deletar a denúncia.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -323,7 +323,7 @@ public class DenunciaServlet extends HttpServlet {
 
         if (denunciaId == null) {
             request.setAttribute("mensagemErro", "ID da denúncia não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -334,19 +334,19 @@ public class DenunciaServlet extends HttpServlet {
 
             if (denuncia == null) {
                 request.setAttribute("mensagemErro", "Denúncia não encontrada para o ID: " + denunciaId);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
                 dispatcher.forward(request, response);
                 return;
             }
 
             request.setAttribute("denuncia", denuncia);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao recuperar aluno: " + e.getMessage());
             request.setAttribute("mensagemErro", "Erro ao tentar recuperar o aluno.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -357,7 +357,7 @@ public class DenunciaServlet extends HttpServlet {
 
         if (autorId == null) {
             request.setAttribute("mensagemErro", "ID do autor não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -367,13 +367,13 @@ public class DenunciaServlet extends HttpServlet {
             System.out.println(denuncias);
 
             request.setAttribute("denuncias", denuncias);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar denuncias: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível listar as denúncias.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -384,7 +384,7 @@ public class DenunciaServlet extends HttpServlet {
 
         if (pedagogoId == null) {
             request.setAttribute("mensagemErro", "ID do pedagogo não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -394,13 +394,13 @@ public class DenunciaServlet extends HttpServlet {
             System.out.println(denuncias);
 
             request.setAttribute("denuncias", denuncias);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar denuncias: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível listar as denúncias do pedagogo.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -411,7 +411,7 @@ public class DenunciaServlet extends HttpServlet {
 
         if (analistaId == null) {
             request.setAttribute("mensagemErro", "ID do analista não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -421,13 +421,13 @@ public class DenunciaServlet extends HttpServlet {
             System.out.println(denuncias);
 
             request.setAttribute("denuncias", denuncias);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar denuncias: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível listar as denúncias do analista.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -438,7 +438,7 @@ public class DenunciaServlet extends HttpServlet {
 
         if (vitimaId == null) {
             request.setAttribute("mensagemErro", "ID da vítima não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -448,13 +448,13 @@ public class DenunciaServlet extends HttpServlet {
             System.out.println(denuncias);
 
             request.setAttribute("denuncias", denuncias);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar denuncias: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível listar as denúncias da vítima.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -465,7 +465,7 @@ public class DenunciaServlet extends HttpServlet {
 
         if (agressorId == null) {
             request.setAttribute("mensagemErro", "ID da vítima não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -475,13 +475,13 @@ public class DenunciaServlet extends HttpServlet {
             System.out.println(denuncias);
 
             request.setAttribute("denuncias", denuncias);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar denuncias: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível listar as denúncias da vítima.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/denuncia/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/denuncia/index.jsp");
             dispatcher.forward(request, response);
         }
     }
