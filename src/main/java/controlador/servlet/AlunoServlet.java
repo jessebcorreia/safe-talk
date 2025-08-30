@@ -65,10 +65,10 @@ public class AlunoServlet extends HttpServlet {
                 mostrarTelaCadastrar(request, response);
                 break;
             case "/exibir":
-                mostrarTelaExibir(request, response);
+                recuperarAluno(request, response);
                 break;
             case "/listar":
-                mostrarTelaListar(request, response);
+                listarAlunos(request, response);
                 break;
 
             // Rotas para executar ações (exemplo: o formulário tem a action /usuario/aluno/exec-cadastrar - isso vai enviar o formulário para essa rota)
@@ -80,12 +80,6 @@ public class AlunoServlet extends HttpServlet {
                 break;
             case "/exec-deletar":
                 deletarAluno(request, response);
-                break;
-            case "/exec-recuperar":
-                recuperarAluno(request, response);
-                break;
-            case "/exec-listar":
-                listarAlunos(request, response);
                 break;
             default:
                 mostrarTelaErro(request, response);
@@ -276,7 +270,7 @@ public class AlunoServlet extends HttpServlet {
             }
 
             request.setAttribute("aluno", aluno);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/exibir.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
@@ -304,7 +298,7 @@ public class AlunoServlet extends HttpServlet {
             System.out.println(alunos);
 
             request.setAttribute("alunos", alunos);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/aluno/listar.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
