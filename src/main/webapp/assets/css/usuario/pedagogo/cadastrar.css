@@ -1,0 +1,126 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    padding: 0 120px 60px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.progresso {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circulo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--cinza-300);
+    color: var(--cinza-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.circulo.ativo {
+    border-color: var(--azul-escuro-base);
+    color: var(--azul-escuro-base);
+}
+
+.circulo.completo {
+    border-color: var(--azul-escuro-base);
+    color: var(--branco);
+    background: var(--azul-escuro-base);
+}
+
+.conector {
+    flex: 1;
+    height: 2px;
+    background: var(--cinza-300);
+}
+
+.painel {
+    display: none;
+}
+
+.painel.ativo {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-wrapper div {
+    position: relative;
+    display: inline-block;
+}
+
+.input-wrapper div input, .input-wrapper div select {
+    width: 100%;
+    padding: 12px 28px 12px 12px;
+    background: none;
+    border: 1px solid var(--cinza-400);
+    border-radius: 8px;
+}
+
+.input-wrapper div select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.input-wrapper div i {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.botoes-acao {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+}
+
+.botoes-acao .voltar {
+    display: none;
+    background-color: var(--laranja-base);
+    color: var(--preto);
+}
+
+.botoes-acao .cadastrar {
+    display: none;
+}
+
+.botoes-acao button {
+    width: 200px;
+}
+
+.cadastro-concluido {
+    display: none;
+    padding: 0 120px;
+}

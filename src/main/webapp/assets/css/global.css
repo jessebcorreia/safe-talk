@@ -1,16 +1,33 @@
 :root {
-  --title-font-family: "Roboto", sans-serif;
-  --body-font-family: "";
+    --fonte-titulo: "League Spartan", sans-serif;
+    --fonte-corpo: "Inter", sans-serif;
+
+    --azul-escuro-base: #110F6C;
+    --laranja-base: #FB6200;
+
+    --cinza-100: #EEEEEE;
+    --cinza-200: #DFDFDF;
+    --cinza-300: #C2C2C2;
+    --cinza-400: #B5B5B5;
+    --cinza-500: #909090;
+
+    --branco: #FFFFFF;
+    --preto: #000000;
 }
 
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 html {
-  font-size: 62.5%;
+    scrollbar-gutter: stable;
+}
+
+body {
+    height: 100vh;
+    overflow-y: auto;
 }
 
 body,
@@ -18,15 +35,50 @@ input,
 button,
 select,
 textarea {
-  font-size: 1.6rem;
-  font-family: var(--body-font-family);
-  color: black;
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: var(--fonte-corpo);
+    color: black;
 }
 
-ul, ol {
-  list-style: none;
+ul,
+ol {
+    list-style: none;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--branco);
+    background-color: var(--azul-escuro-base);
+    transition: filter 0.1s;
+}
+
+button:hover {
+    filter: brightness(1.2);
+}
+
+h1 {
+    font-family: var(--fonte-titulo);
+    color: var(--azul-escuro-base);
+    font-weight: bold;
+    font-size: 48px;
+    text-align: center;
+}
+
+strong {
+    color: var(--laranja-base);
+    font-weight: bold;
+}
+
+i {
+    font-weight: 300;
+    color: var(--cinza-400);
+    font-size: 24px;
 }

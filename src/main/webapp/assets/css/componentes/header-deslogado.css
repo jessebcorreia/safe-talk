@@ -1,0 +1,67 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 120px;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nome-sistema-wrapper {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.nome {
+    font-size: 32px;
+    font-family: var(--fonte-titulo);
+    font-weight: bold;
+    color: var(--azul-escuro-base);
+}
+
+.logo {
+    width: 70px;
+    height: auto;
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav > ul {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    color: var(--preto);
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav a.acesso {
+    color: var(--branco);
+    background-color: var(--azul-escuro-base);
+}
+
+nav a.acesso:hover {
+    text-decoration: none;
+    color: var(--branco);
+    filter: brightness(1.3);
+}

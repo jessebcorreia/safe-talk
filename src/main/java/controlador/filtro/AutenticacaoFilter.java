@@ -14,17 +14,34 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+
+
+
+                @WebInitParam(name = "whitelist", value =
+                        "/assets/css/*" +
+                        "/assets/js/*" +
+                        ",/assets/img/*" +
+                        ",/" +
+                        ",/como-denunciar" +
+                        ",/relatorios" +
+                        ",/contato" +
+                        ",/planos" +
+                        ",/login/*" +
+                        ",/usuario/unidade-ensino/cadastrar" +
+                        ",/usuario/unidade-ensino/exec-cadastrar"
+                )
+
+
+
+*/
+
+
 @WebFilter(
         urlPatterns = { "/*" },
         initParams = {
                 @WebInitParam(name = "whitelist", value =
-                        "/assets/css/*" +
-                        ",/assets/js/*" +
-                        ",/assets/img/*" +
-                        ",/login/*" +
-                        ",/usuario/unidade-ensino/cadastrar" +
-                        ",/usuario/unidade-ensino/exec-cadastrar" +
-                        ",/"
+                        "/*"
                 )
         }
 )

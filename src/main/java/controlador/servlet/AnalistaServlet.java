@@ -94,31 +94,31 @@ public class AnalistaServlet extends HttpServlet {
     // Métodos para exibir as telas
     private void mostrarTelaInicial(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaCadastrar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/cadastrar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/cadastrar.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaExibir(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/exibir.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/exibir.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaListar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/listar.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/listar.jsp");
         dispatcher.forward(request, response);
     }
 
     private void mostrarTelaErro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/inicio/erro-404.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/inicio/erro-404.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -163,7 +163,7 @@ public class AnalistaServlet extends HttpServlet {
             System.err.println("Erro ao cadastrar analista: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível realizar o cadastro.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -174,7 +174,7 @@ public class AnalistaServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID do analista não informado ou inválido.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -218,7 +218,7 @@ public class AnalistaServlet extends HttpServlet {
             System.err.println("Erro ao cadastrar analista: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível atualizar a analista.");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -229,7 +229,7 @@ public class AnalistaServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID do analista não fornecido para exclusão.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -242,7 +242,7 @@ public class AnalistaServlet extends HttpServlet {
         } catch (RuntimeException e) {
             System.err.println("Erro ao deletar analista: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível deletar a analista. Tente novamente mais tarde.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -253,7 +253,7 @@ public class AnalistaServlet extends HttpServlet {
 
         if (usuarioId == null) {
             request.setAttribute("mensagemErro", "ID do analista não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -265,19 +265,19 @@ public class AnalistaServlet extends HttpServlet {
 
             if (analista == null) {
                 request.setAttribute("mensagemErro", "Analista não encontrado para o ID: " + usuarioId);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
                 dispatcher.forward(request, response);
                 return;
             }
 
             request.setAttribute("analista", analista);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao recuperar analista: " + e.getMessage());
             request.setAttribute("mensagemErro", "Erro ao tentar recuperar a analista.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -288,7 +288,7 @@ public class AnalistaServlet extends HttpServlet {
 
         if (cursoId == null) {
             request.setAttribute("mensagemErro", "ID do analista não fornecido ou inválido para recuperação.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -298,13 +298,13 @@ public class AnalistaServlet extends HttpServlet {
             System.out.println(analistas);
 
             request.setAttribute("analistas", analistas);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
 
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar analistas: " + e.getMessage());
             request.setAttribute("mensagemErro", "Não foi possível listar os analistas.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/pages/usuario/analista/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/assets/paginas/usuario/analista/index.jsp");
             dispatcher.forward(request, response);
         }
     }

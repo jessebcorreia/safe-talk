@@ -1,0 +1,16 @@
+.container {
+    display: grid;
+    gap: 80px;
+    padding: 0 120px;
+}
+
+section {
+    display: flex;
+    gap: 80px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+p {
+    margin-bottom: 32px;
+}

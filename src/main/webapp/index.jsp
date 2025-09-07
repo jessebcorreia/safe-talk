@@ -5,24 +5,35 @@
 <html lang="pt-BR">
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Safe Talk</title>
 
+    <link rel="icon" href="<c:url value='/assets/img/favicon.svg'/>" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value='/assets/css/global.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css/header-deslogado.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css/pagina-inicial.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/componentes/header-deslogado.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/index.css'/>" />
 </head>
 
 <body>
-    <%@ include file="/assets/components/header-deslogado.jsp" %>
+    <%@ include file="/assets/componentes/header-deslogado.jsp" %>
 
-    <main>
+    <main class="container">
         <section>
             <div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, neque ipsum. Ullam nihil pariatur harum minus! Ipsa reiciendis, tenetur blanditiis doloribus nemo odio, nihil fugiat inventore quod expedita laudantium officiis!</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis cupiditate sunt tempore inventore atque autem dolores, laboriosam sapiente, nobis ipsum, dolorum iusto dolore! Deleniti repellendus maiores error iure culpa enim?</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia necessitatibus ipsum asperiores fugit harum impedit amet alias quisquam nulla recusandae, maxime sint vitae dignissimos placeat! Dolor placeat nemo quaerat autem!</p>
+                <p>
+                    Bem-vindo ao <strong>Safe Talk</strong> de escuta e apoio contra o <strong>bullying</strong>.
+                </p>
+                <p>
+                    Este site foi criado para ajudar a identificar, denunciar e combater o <strong>bullying</strong> nas escolas de forma segura e confidencial. Aqui, alunos, professores e responsáveis podem registrar ocorrências e acompanhar o andamento das ações.
+                </p>
+                <p>
+                    Nosso objetivo é promover um ambiente escolar mais respeitoso, acolhedor e livre de violência.
+                </p>
             </div>
             <img
                 class="alunos"
@@ -38,9 +49,15 @@
                 alt="Imagem ilustrativa com 3 alunos"
             />
             <div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, neque ipsum. Ullam nihil pariatur harum minus! Ipsa reiciendis, tenetur blanditiis doloribus nemo odio, nihil fugiat inventore quod expedita laudantium officiis!</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis cupiditate sunt tempore inventore atque autem dolores, laboriosam sapiente, nobis ipsum, dolorum iusto dolore! Deleniti repellendus maiores error iure culpa enim?</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia necessitatibus ipsum asperiores fugit harum impedit amet alias quisquam nulla recusandae, maxime sint vitae dignissimos placeat! Dolor placeat nemo quaerat autem!</p>
+                <p>
+                    Nosso sistema contra o bullying permite que qualquer aluno denuncie situações de forma segura, rápida.
+                </p>
+                <p>
+                    As denúncias são analisadas por profissionais preparados para agir com responsabilidade e cuidado.
+                </p>
+                <p>
+                    Sabemos que é difícil, mas denunciar é um ato de coragem que pode proteger você e outras pessoas. Falar é o primeiro passo para transformar a realidade e construir um ambiente mais justo e acolhedor.
+                </p>
             </div>
         </section>
     </main>
