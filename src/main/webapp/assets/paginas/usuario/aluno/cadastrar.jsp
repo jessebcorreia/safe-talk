@@ -5,82 +5,177 @@
 <html lang="pt-BR">
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cadastrar Aluno</title>
+    <title>Safe Talk - Cadastrar Unidade de Ensino</title>
 
-    <link rel="stylesheet" href="<c:url value='/assets/css-js/global.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css-js/componentes/header-deslogado.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css-js/css-js/usuario/aluno/cadastrar.css'/>" />
+    <link rel="icon" href="<c:url value='/assets/img/favicon.svg'/>" type="image/svg+xml">
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=League+Spartan:wght@100..900&display=swap"
+    />
+    <link rel="stylesheet" href="<c:url value='/assets/css/global.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/componentes/header-deslogado.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/usuario/aluno/cadastrar.css'/>" />
 </head>
 
 <body>
     <%@ include file="/assets/componentes/header-deslogado.jsp" %>
 
-    <h1>Cadastrar Aluno</h1>
+    <div class="container">
+        <h1>Cadastrar aluno</h1>
 
-    <form action="<c:url value='/usuario/aluno/exec-cadastrar'/>" method="post">
-        <div>
-        <!--Endereço-->
-            <label for="logradouro">Logradouro</label>
-            <input type="text" id="logradouro" name="logradouro" placeholder="Digite aqui o logradouro" required />
+        <div class="progresso">
+            <div class="circulo ativo">1</div>
 
-            <label for="numero">Número</label>
-            <input type="text" id="numero" name="numero" placeholder="Digite aqui o número" required />
+            <div class="conector"></div>
 
-            <label for="complemento">Complemento</label>
-            <input type="text" id="complemento" name="complemento" placeholder="Digite aqui o complemento" required />
+            <div class="circulo">2</div>
 
-            <label for="bairro">Bairro</label>
-            <input type="text" id="bairro" name="bairro" placeholder="Digite aqui o bairro" required />
+            <div class="conector"></div>
 
-            <label for="cidade">Cidade</label>
-            <input
-            type="text" id="cidade" name="cidade" placeholder="Digite aqui a cidade" required />
+            <div class="circulo">3</div>
+        </div>
 
-            <label for="estado">Estado</label>
-            <input type="text" id="estado" name="estado" placeholder="Digite aqui o estado" required />
+        <form action="<c:url value='/usuario/aluno/exec-cadastrar'/>" method="post">
 
-            <label for="cep">CEP</label>
-            <input type="text" id="cep" name="cep" placeholder="Digite aqui o cep" required />
+            <div class="painel ativo">
+                <div class="input-wrapper">
+                    <label for="email">E-mail</label>
+                    <div>
+                        <input type="email" id="email" name="email" placeholder="Digite aqui o e-mail" required />
+                        <i class="ph ph-envelope"></i>
+                    </div>
+                </div>
 
-            <label for="pais">País</label>
-            <input type="text" id="pais" name="pais" placeholder="Digite aqui o pais" required />
-           </div>
+                <div class="input-wrapper">
+                    <label for="senha">Senha</label>
+                    <div>
+                        <input type="password" id="senha" name="senha" placeholder="Digite aqui a senha" required />
+                        <i class="ph ph-lock-key"></i>
+                    </div>
+                </div>
 
-    <!--email e senha usuario-->
-    <div>
-        <label for="email">E-mail</label>
-        <input type="email" id="email" name="email" placeholder="Digite aqui o e-mail" required />
+                <div class="input-wrapper">
+                    <label for="Nome">Nome</label>
+                    <div>
+                        <input type="text" id="nome" name="nome" placeholder="Digite aqui o nome" required />
+                        <i class="ph ph-identification-card"></i>
+                    </div>
+                </div>
 
-        <label for="senha">Senha</label>
-        <input type="password" id="senha" name="senha" placeholder="Digite aqui a senha" required />
+                <div class="input-wrapper">
+                    <label for="sobrenome">Sobrenome</label>
+                    <div>
+                        <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite aqui o sobrenome" required />
+                        <i class="ph ph-identification-card"></i>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="cpf">CPF</label>
+                    <div>
+                        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required />
+                        <i class="ph ph-identification-card"></i>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="sexo">Sexo</label>
+                    <div>
+                        <select name="sexo" id="sexo" required>
+                            <option value="" disabled selected>Selecione o sexo</option>
+                            <option value="MASCULINO">Masculino</option>
+                            <option value="FEMININO">Feminino</option>
+                        </select>
+                        <i class="ph ph-arrow-circle-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="painel">
+                <div class="input-wrapper">
+                    <label for="logradouro">Logradouro</label>
+                    <div>
+                        <input type="text" id="logradouro" name="logradouro" placeholder="Digite aqui o logradouro" required />
+                        <i class="ph ph-house-line"></i>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="numero">Número</label>
+                    <div>
+                        <input type="text" id="numero" name="numero" placeholder="Digite aqui o número" required />
+                        <i class="ph ph-house-line"></i>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="complemento">Complemento</label>
+                    <div>
+                        <input type="text" id="complemento" name="complemento" placeholder="Digite aqui " required />
+                        <i class="ph ph-house-line"></i>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="bairro">Bairro</label>
+                    <div>
+                        <input type="text" id="bairro" name="bairro" placeholder="Digite aqui " required />
+                        <i class="ph ph-house-line"></i>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="cidade">Cidade</label>
+                    <div>
+                        <input type="text" id="cidade" name="cidade" placeholder="Digite aqui " required />
+                        <i class="ph ph-house-line"></i>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="estado">Estado</label>
+                    <div>
+                        <input type="text" id="estado" name="estado" placeholder="Digite aqui " required />
+                        <i class="ph ph-house-line"></i>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="cep">CEP</label>
+                    <div>
+                        <input type="text" id="cep" name="cep" placeholder="Digite aqui " required />
+                        <i class="ph ph-house-line"></i>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="pais">País</label>
+                    <div>
+                        <input type="text" id="pais" name="pais" placeholder="Digite aqui " required />
+                        <i class="ph ph-house-line"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="botoes-acao">
+                <button type="button" class="voltar">Voltar</button>
+                <button type="button" class="proximo">Próximo</button>
+                <button type="submit" class="cadastrar">Cadastrar</button>
+            </div>
+        </form>
     </div>
 
-
-    <!--Dados Aluno-->
-    <div>
-        <label classfor="nome">Nome </label>
-        <input type="text" id="nome" name="nome" placeholder="Digite aqui o nome " required />
-
-        <label for="sobrenome">Sobrenome</label>
-        <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite aqui a sobrenome" required />
-
-        <label for="cpf">CPF</label>
-        <input type="text" id="cpf" name="cpf" placeholder="Digite aqui o cpf no formato: 000.000.000-00" required />
-
-        <label for="sexo"> Sexo </label>
-        <select name="sexo" id="sexo "required>
-            <option value="MASCULINO">Masculino</option>
-            <option value="FEMININO">Feminino</option>
-        </select>
-
-        <label for="turma_id">Truma</label>
-        <input type="text" id="turma_id" name="turma_id" placeholder="Digite aqui a turma do aluno" required />
-
-        <button type="submit">Cadastrar</button>
-    </div>
-    </form>
+    <script src="<c:url value='/assets/js/usuario/aluno/cadastrar.js'/>"></script>
 </body>
 
 </html>

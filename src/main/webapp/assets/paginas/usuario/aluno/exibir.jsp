@@ -9,15 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exibir Aluno</title>
 
-    <link rel="stylesheet" href="<c:url value='/assets/css-js/global.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css-js/componentes/header-deslogado.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css-js/css-js/usuario/aluno/exibir.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/global.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/componentes/header-deslogado.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/css/usuario/aluno/exibir.css'/>" />
 </head>
 
 <body>
 
     <%@ include file="/assets/componentes/header-deslogado.jsp" %>
-
 
         <div class="card">
             <h2>Dados do Aluno/</h2>

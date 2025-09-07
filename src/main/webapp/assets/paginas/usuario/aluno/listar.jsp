@@ -10,9 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Listar Alunos</title>
 
-    <link rel="stylesheet" href="<c:url value='/assets/css-js/global.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css-js/componentes/header-deslogado.css'/>" />
-    <link rel="stylesheet" href="<c:url value='/assets/css-js/css-js/usuario/aluno/listar.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/global.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/componentes/header-deslogado.css'/>" />
+    <link rel="stylesheet" href="<c:url value='/assets/css/css/usuario/aluno/listar.css'/>" />
 </head>
 
 <body>
